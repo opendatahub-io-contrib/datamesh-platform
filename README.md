@@ -15,6 +15,7 @@ The community pattern implementation is based on 4 foundational principles:
 
 4. **Federated governance:** The platform requires a layer providing a federated view of the data domains while being able to support the establishment of common operating standards around data / metadata / data lineage management, quality assurance, security and compliance policies, and by extension any cross-cutting supervision concern across all data products. The federated governance principle achieves interoperability of all data products through standardization, which is promoted through the whole data mesh by the governance group. 
 
+The platform is deployed on top of OpenShift Container Platform based on the following component architecture:
 
 ![images/data-mesh-components.png](images/datamesh-arch.png)
 
