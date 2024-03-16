@@ -1,0 +1,110 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: trino-worker
+  labels:
+    app: trino-worker
+    app.kubernetes.io/part-of: trino
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: trino-worker
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: trino-worker
+      annotations:
+        openshift.openshift.io/restartedAt: '2024-03-06T18:49:33.931Z'
+    spec:
+      restartPolicy: Always
+      serviceAccountName: trino-default
+      # imagePullSecrets:
+      #   - name: registry-credentials
+      # schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - resources: {}
+          readinessProbe:
+            httpGet:
+              path: /v1/info
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 20
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          terminationMessagePath: /dev/termination-log
+          name: trino-worker
+          livenessProbe:
+            httpGet:
+              path: /v1/info
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 20
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: trino-secrets
+                  key: minio-access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: trino-secrets
+                  key: minio-secret-key
+            - name: INTER_COMM_SHARED_SECRET
+              value: >-
+                kzs71nsYBRr8cysT62zb6P+VT8YsVi/eASfNKUJkvPDce6aof6FLyM/0EDA8qK46P8sD2jXBTTe7cKX0MEqTS2UNZ7YdYWHUUoSG2nLgEryZbqlEkguYWs2dSSYkzv9DIPMtRvGxmNdQ6HGGscrqsFkeK7kSCd6mn5YNskIv6Z665gquqq+SlqV5UylFDcXhB6Z7oWuZ2fq3WONVWtTIhYP73YO8iDORG2afkqPQhRKTw848YQVrcqKAIOX6sirMb5KE1BP0yXz533J71vFuMqkvTBrFV3lkvAq+/7W4iA9Xn9WDJ8TGgcwB7jFOLH9htKYrXtO2XgMsWxizi7XbFzXsPEreqndhZEX7i6U0/K22kCWRy7/lcH+JMQAzq3J+qxl1KqTLVTfu3iSIKUj093/wR0EPcH282a+HMzk/5E1aGk3uV40M/1wQwlEDzBRaGtLtW7tyFHX+sc29nLgkOFAPknwqnYoSR7FDEgO+CrB00zNeY1lS1Xx8OCEfGgg+y5zK7pSMm7cuq8PHjENXCsWOY3xNkJLKsf9mWiWLZhxE1G6EQMG8WPz2r+DhBskTaoHaRPCfcD3/2vaDEjvfK/9kek94g00JcjJB9HQQe3tINmEBxkA8SjIWZe40kcPU0hbKqeA8WFzUgwsB/2KxFvTcPpRvNKseozZZxL/2Dlk=
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/trino
+            - name: catalog-volume
+              mountPath: /etc/trino/catalog
+            - name: schemas-volume
+              mountPath: /etc/trino/schemas
+            # - name: truststore-volume
+            #   mountPath: /etc/trino/truststore
+          terminationMessagePolicy: File
+          image: trinodb/trino
+      serviceAccount: trino-default
+      volumes:
+        - name: config-volume
+          configMap:
+            name: trino-worker
+            defaultMode: 420
+        - name: catalog-volume
+          configMap:
+            name: trino-catalog
+            defaultMode: 420
+        - name: schemas-volume
+          configMap:
+            name: schemas-volume-worker
+            defaultMode: 420
+        # - name: truststore-volume
+        #   secret:
+        #     secretName: truststore
+        #     items:
+        #       - key: truststore.jks
+        #         path: truststore.jks
+            # defaultMode: 420
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%

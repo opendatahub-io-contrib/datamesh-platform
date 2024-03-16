@@ -1,0 +1,9 @@
+{
+  "auths": {
+    "quay.io": {
+      "auth": "t8+iaw4AYN8fH7pUC6xSxRS9yd5nJDjz2ePet2kHYIjVvtJLdPF3SZI+T1Yerub/"    },
+    "https://index.docker.io/v1/": {
+      "auth": "dckr_pat_u49FajPCIk2fvok9bEJaPnTcIn0"
+    }
+  }
+}

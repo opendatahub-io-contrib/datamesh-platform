@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ./deployment-manifest/openmetadatadb-pvc.yaml
+- ./deployment-manifest/openmetadatadb-db-secret.yaml
+- ./deployment-manifest/deployment-postgres.yaml
+- ./deployment-manifest/service-openmetadatadb.yaml
+
+- ./deployment-manifest/configmap-openmetadata.yaml
+- ./deployment-manifest/deployment-elasticsearch.yaml
+- ./deployment-manifest/service-elasticsearch.yaml
+
+- ./deployment-manifest/deployment-openmetadata.yaml
+- ./deployment-manifest/service-openmetadata.yaml
+- ./deployment-manifest/route-openmetadata.yaml
+
+
+

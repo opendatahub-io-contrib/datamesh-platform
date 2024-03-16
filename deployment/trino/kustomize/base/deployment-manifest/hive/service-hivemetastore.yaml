@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hive-metastore
+spec:
+  ports:
+    - protocol: TCP
+      port: 9083
+      targetPort: 9083
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  selector:
+    app: hive-metastore

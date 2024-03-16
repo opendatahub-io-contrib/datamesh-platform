@@ -1,0 +1,35 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: superset
+  labels:
+    app.kubernetes.io/instance: superset
+    app.kubernetes.io/name: superset
+data:
+  superset_config.py: >
+    ROW_LIMIT = 5000
+
+    MAPBOX_API_KEY = os.getenv('MAPBOX_API_KEY', '')
+
+    db_username = os.environ['POSTGRESQL_USERNAME'] db_password =
+    os.environ['POSTGRESQL_PASSWORD'] db_name =
+    os.environ['POSTGRESQL_DATABASE'] SQLALCHEMY_DATABASE_URI =
+    (f'postgresql+psycopg2://{db_username}:'
+                            f'{db_password}@supersetdb:5432/{db_name}')
+
+    SQLALCHEMY_TRACK_MODIFICATIONS = True SECRET_KEY =
+    os.getenv('SUPERSET_SECRET_KEY', '') DATA_DIR = '/var/lib/superset'
+    LOG_LEVEL = 'INFO' FEATURE_FLAGS = {
+        'ENABLE_TEMPLATE_PROCESSING': True,
+    }
+
+    # SUPERSET_WEBSERVER_PROTOCOL = 'https' # ENABLE_PROXY_FIX = True
+
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'pool_size': 15,
+        'pool_timeout': 60,
+        'pool_recycle': 3600
+    }
+
+    # Set Webserver timeout to 30 minutes to wait for the queries to be executed
+    SUPERSET_WEBSERVER_TIMEOUT = 1800

@@ -1,0 +1,14 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: jupyter-notebook-route
+spec:
+  to:
+    kind: Service
+    name: jupyter-notebook-service
+    weight: 100
+  port:
+    targetPort: 8888
+  tls:
+    termination: edge
+  wildcardPolicy: None

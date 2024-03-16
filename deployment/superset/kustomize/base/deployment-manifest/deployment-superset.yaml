@@ -1,0 +1,111 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: superset
+  labels:
+    app: superset
+    app.kubernetes.io/part-of: superset
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: superset
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: superset
+    spec:
+      restartPolicy: Always
+      initContainers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: superset-init-db
+          command:
+            - /bin/sh
+            - '-c'
+            - >-
+              . /app/pythonpath/superset_bootstrap.sh; .
+              /app/pythonpath/superset_init.sh
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: superset-config
+              readOnly: true
+              mountPath: /app/pythonpath
+          terminationMessagePolicy: File
+          envFrom:
+            - secretRef:
+                name: superset-env-secret
+          image: 'apachesuperset.docker.scarf.sh/apache/superset:3.0.1'
+      serviceAccountName: superset-serviceaccount
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsUser: 0
+      containers:
+        - resources: {}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
+            periodSeconds: 15
+            successThreshold: 1
+            failureThreshold: 3
+          terminationMessagePath: /dev/termination-log
+          name: superset
+          command:
+            - /bin/sh
+            - '-c'
+            - . /app/pythonpath/superset_bootstrap.sh; /usr/bin/run-server.sh
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
+            periodSeconds: 15
+            successThreshold: 1
+            failureThreshold: 3
+          env:
+            - name: SUPERSET_PORT
+              value: '8088'
+          ports:
+            - name: http
+              containerPort: 8088
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 60
+          volumeMounts:
+            - name: superset-config
+              readOnly: true
+              mountPath: /app/pythonpath
+          terminationMessagePolicy: File
+          envFrom:
+            - secretRef:
+                name: superset-env-secret
+          image: 'apachesuperset.docker.scarf.sh/apache/superset:3.0.1'
+      serviceAccount: superset-serviceaccount
+      volumes:
+        - name: superset-config
+          secret:
+            secretName: superset-config
+            defaultMode: 420
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%

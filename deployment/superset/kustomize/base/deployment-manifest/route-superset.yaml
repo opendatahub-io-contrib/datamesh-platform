@@ -1,0 +1,18 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: superset
+  labels:
+    app: superset
+spec:
+  to:
+    path: /
+    kind: Service
+    name: superset
+    weight: 100
+  port:
+    targetPort: 8088-tcp
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow
+  wildcardPolicy: None

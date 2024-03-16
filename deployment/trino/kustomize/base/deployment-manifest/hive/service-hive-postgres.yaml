@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hive-postgresql
+  labels:
+    app.kubernetes.io/instance: hive
+    app.kubernetes.io/name: hive-postgresql
+spec:
+  ports:
+    - name: tcp-postgresql
+      protocol: TCP
+      port: 5432
+      targetPort: tcp-postgresql
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/instance: hive
+    app.kubernetes.io/name: hive-postgresql

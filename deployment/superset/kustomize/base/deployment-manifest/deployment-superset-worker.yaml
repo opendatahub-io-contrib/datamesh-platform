@@ -1,0 +1,85 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: superset-worker
+  labels:
+    app: superset-worker
+    app.kubernetes.io/part-of: superset
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: superset-worker
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: superset-worker
+    spec:
+      volumes:
+        - name: superset-config
+          secret:
+            secretName: superset-config
+            defaultMode: 420
+      initContainers:
+        - name: wait-for-postgres-redis
+          image: 'apache/superset:dockerize'
+          command:
+            - /bin/sh
+            - '-c'
+            - >-
+              dockerize -wait "tcp://$DB_HOST:$DB_PORT" -wait
+              "tcp://$REDIS_HOST:$REDIS_PORT" -timeout 120s
+          envFrom:
+            - secretRef:
+                name: superset-env-secret
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      containers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: superset
+          command:
+            - /bin/sh
+            - '-c'
+            - >-
+              . /app/pythonpath/superset_bootstrap.sh; celery
+              --app=superset.tasks.celery_app:app worker
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - '-c'
+                - >-
+                  celery -A superset.tasks.celery_app:app inspect ping -d
+                  celery@$HOSTNAME
+            initialDelaySeconds: 120
+            timeoutSeconds: 60
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 3
+          env:
+            - name: SUPERSET_PORT
+              value: '8088'
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: superset-config
+              readOnly: true
+              mountPath: /app/pythonpath
+          terminationMessagePolicy: File
+          envFrom:
+            - secretRef:
+                name: superset-env-secret
+          image: 'apachesuperset.docker.scarf.sh/apache/superset:3.0.1'
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%

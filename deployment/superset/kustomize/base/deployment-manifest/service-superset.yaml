@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: superset
+  labels:
+    app: superset
+  managedFields:
+spec:
+  ports:
+    - name: 8088-tcp
+      protocol: TCP
+      port: 8088
+      targetPort: 8088
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  selector:
+    app: superset

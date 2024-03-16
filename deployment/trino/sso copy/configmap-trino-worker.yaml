@@ -1,0 +1,58 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: trino-worker
+  labels:
+    app: trino
+data:
+  config.properties: |
+    coordinator=false
+    http-server.http.port=8080
+    query.max-memory=4GB
+    query.max-memory-per-node=1GB
+    discovery.uri=http://trino:8080
+  exchange-manager.properties: |
+    exchange-manager.name=filesystem
+
+    exchange.base-directories=/tmp/trino-local-file-system-exchange-manager
+  jvm.config: >
+    -server
+
+    -agentpath:/usr/lib/trino/bin/libjvmkill.so
+
+    -Xmx8G
+
+    -XX:+UseG1GC
+
+    -XX:G1HeapRegionSize=32M
+
+    -XX:+ExplicitGCInvokesConcurrent
+
+    -XX:+HeapDumpOnOutOfMemoryError
+
+    -XX:+ExitOnOutOfMemoryError
+
+    -XX:-OmitStackTraceInFastThrow
+
+    -XX:ReservedCodeCacheSize=512M
+
+    -XX:PerMethodRecompilationCutoff=10000
+
+    -XX:PerBytecodeRecompilationCutoff=10000
+
+    -Djdk.attach.allowAttachSelf=true
+
+    -Djdk.nio.maxCachedBufferSize=2000000
+
+    -XX:+UnlockDiagnosticVMOptions
+
+    # Reduce starvation of threads by GClocker, recommend to set about the
+    number of cpu cores (JDK-8192647)
+
+    -XX:GCLockerRetryAllocationCount=32
+  log.properties: |
+    io.trino=INFO
+  node.properties: |
+    node.environment=production
+    node.data-dir=/data/trino
+    plugin.dir=/usr/lib/trino/plugin

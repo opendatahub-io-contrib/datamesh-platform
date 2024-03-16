@@ -1,0 +1,22 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: openmetadata
+  labels:
+    app.kubernetes.io/instance: openmetadata
+    app.kubernetes.io/name: openmetadata
+spec:
+  ports:
+    - name: 8585-tcp
+      protocol: TCP
+      port: 8585
+      targetPort: 8585
+    - name: 8586-admin
+      protocol: TCP
+      port: 8586
+      targetPort: 8586
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/instance: openmetadata
+    app.kubernetes.io/name: openmetadata

@@ -1,0 +1,24 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: elasticsearch
+  labels:
+    app: elasticsearch
+    app.kubernetes.io/component: elasticsearch
+    app.kubernetes.io/instance: elasticsearch
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/part-of: openmetadata
+spec:
+  ports:
+    - name: 9200-tcp
+      protocol: TCP
+      port: 9200
+      targetPort: 9200
+    - name: 9300-tcp
+      protocol: TCP
+      port: 9300
+      targetPort: 9300
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  selector:
+    app: elasticsearch

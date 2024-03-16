@@ -1,0 +1,82 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hive-metastore
+  labels:
+    app.kubernetes.io/part-of: trino
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hive-metastore
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: hive-metastore
+    spec:
+      restartPolicy: Always
+      securityContext: {}
+      containers:
+        - resources:
+            limits:
+              cpu: '4'
+              memory: 2Gi
+            requests:
+              cpu: '2'
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          name: hive-metastore
+          env:
+            - name: HIVE_DB_EXTERNAL
+              value: 'true'
+            - name: DATABASE_HOST
+              value: hive-postgresql
+            - name: DATABASE_PORT
+              value: '5432'
+            - name: DATABASE_DB
+              valueFrom:
+                secretKeyRef:
+                  name: hive-postgresql
+                  key: postgresql-database
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: hive-postgresql
+                  key: postgresql-user
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hive-postgresql
+                  key: postgresql-password
+            - name: AWS_ACCESS_KEY_ID
+              value: minioAdmin
+            - name: AWS_SECRET_ACCESS_KEY
+              value: minio1234
+            - name: S3_ENDPOINT_URL
+              value: 'http://minio.os-climate.svc.cluster.local:9000'
+            - name: S3_BUCKET
+              value: pcaf
+            - name: S3_PREFIX
+              value: data
+          ports:
+            - name: tcp
+              containerPort: 9083
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: hive-config
+              mountPath: /opt/hadoop/etc/hadoop
+            - name: hive-config
+              mountPath: /opt/hive-metastore/conf
+          terminationMessagePolicy: File
+          image: naushadh/hive-metastore
+      volumes:
+        - name: hive-config
+          emptyDir: {}
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%

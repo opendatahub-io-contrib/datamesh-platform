@@ -1,0 +1,80 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: minio
+  labels:
+    app.kubernetes.io/name: minio
+    app.kubernetes.io/part-of: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: minio
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: minio
+      annotations:
+        openshift.openshift.io/restartedAt: '2024-02-14T01:41:11.328Z'
+    spec:
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: minio
+      containers:
+        - resources: {}
+          readinessProbe:
+            httpGet:
+              path: /minio/health/ready
+              port: 9000
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          terminationMessagePath: /dev/termination-log
+          name: minio
+          livenessProbe:
+            httpGet:
+              path: /minio/health/live
+              port: 9000
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          env:
+            - name: MINIO_ACCESS_KEY
+              value: minio
+            - name: MINIO_SECRET_KEY
+              value: minio123$
+            - name: MINIO_PROMETHEUS_AUTH_TYPE
+              value: public
+            - name: MINIO_TRACE
+              value: 'true'
+            - name: MINIO_ROOT_USER
+              value: minioAdmin
+            - name: MINIO_ROOT_PASSWORD
+              value: minio1234
+          ports:
+            - containerPort: 9000
+              protocol: TCP
+            - containerPort: 33933
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: storage
+              mountPath: /storage
+          terminationMessagePolicy: File
+          image: 'docker.io/minio/minio:latest'
+          args:
+            - server
+            - /storage
+            - '--console-address=:33933'
+      restartPolicy: Always
+      securityContext: {}
+  strategy:
+    type: Recreate

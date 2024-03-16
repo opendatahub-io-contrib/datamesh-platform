@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: openmetadatadb
+    app.kubernetes.io/instance: openmetadata
+  name: openmetadatadb
+spec:
+  type: ClusterIP
+  ports:
+  - name: postgresql
+    port: 5432
+    targetPort: 5432
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: openmetadatadb
+    app.kubernetes.io/instance: openmetadata

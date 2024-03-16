@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: airflow
+  labels:
+    app: airflow
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+  selector:
+    app: airflow

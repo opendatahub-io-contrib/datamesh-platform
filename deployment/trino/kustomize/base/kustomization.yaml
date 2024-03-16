@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+secretGenerator:
+  - name: keystore-p12
+    type: Opaque
+    files:
+      - ./deployment-manifest/keystores/trino.p12
+  - name: keystore
+    type: Opaque
+    files:
+      - ./deployment-manifest/keystores/keystore.jks
+
+resources:
+- ./deployment-manifest/hive/secret.yaml
+- ./deployment-manifest/hive/deployment-potgress.yaml
+- ./deployment-manifest/hive/service-hive-postgres.yaml
+
+- ./deployment-manifest/hive/deployment-hivemetastore.yaml
+# - ./deployment-manifest/hive/service-hivemetastore.yaml
+- ./deployment-manifest/ssc-trino-custom.yaml
+- ./deployment-manifest/service-account-trino.yaml
+- ./deployment-manifest/secret-trino-coordoinator.yaml
+# - ./deployment-manifest/secret-trino-ssl-keystore-p12.yaml
+# - ./deployment-manifest/secret-trino-ssl-keystore.yaml
+- ./deployment-manifest/configmap-schema-coordinator.yaml
+- ./deployment-manifest/configmap-schema-worker.yaml
+- ./deployment-manifest/configmap-trino-catalog.yaml
+
+- ./deployment-manifest/configmap-trino-coordinator.yaml
+- ./deployment-manifest/configmap-trino-worker.yaml
+
+- ./deployment-manifest/deployment-trino-coordinator.yaml
+- ./deployment-manifest/deployment-trino-worker.yaml
+- ./deployment-manifest/service-trino-coordinator.yaml

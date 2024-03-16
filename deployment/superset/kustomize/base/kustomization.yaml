@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ./deployment-manifest/redis/secret-redis.yaml
+- ./deployment-manifest/redis/configmap-redis-script.yaml
+- ./deployment-manifest/redis/configmap-redis-health.yaml
+- ./deployment-manifest/redis/configmap-redis.yaml
+- ./deployment-manifest/redis/pvc-redis.yaml
+- ./deployment-manifest/redis/deployment-redis.yaml
+- ./deployment-manifest/redis/service-redis.yaml
+
+
+- ./deployment-manifest/secret-postgres.yaml
+- ./deployment-manifest/deployment-supersetdb.yaml
+- ./deployment-manifest/service-superset-db.yaml
+
+- ./deployment-manifest/configmap-superset.yaml
+- ./deployment-manifest/secret-superset-config.yaml
+- ./deployment-manifest/secret-superset.yaml
+- ./deployment-manifest/service-account-superset.yaml
+- ./deployment-manifest/deployment-superset.yaml
+- ./deployment-manifest/deployment-superset-worker.yaml
+- ./deployment-manifest/service-superset.yaml
+- ./deployment-manifest/route-superset.yaml
+
+
+
+
+
+
+
