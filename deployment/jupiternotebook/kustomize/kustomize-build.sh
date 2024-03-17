@@ -1,6 +1,7 @@
 #!/bin/bash
 
-NAMESPACE="datamesh-demo"
+# NAMESPACE="datamesh-demo"
+NAMESPACE="${NAMESPACE:-datamesh-demo}"
 
 chmod +x ./overlays/development
 

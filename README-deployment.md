@@ -19,15 +19,22 @@ The following are the bare minimum compoments required to build Data Mesh patter
 
 ![images/deploy-structure.png](images/deploy-structure.png)
 
+# Deployment instruction :
 
-# Airflow Deployment :
+The main objectibve of Data mesh deployment is to deploy all components in few mintues by executing simple one shell scripts. 
 
-
-# Trino Deployment :
-
-
-# OpenMetaData Deployment :
+Each data mesh compoent has it's own deployment manifest(s) on its own directory in deployment folder as shown in a above screen shot. You can deploy all Data Mesh components in one shot by execting "datamesh-deploy.sh" or you can deploy individual compoent by executing "kustomize-run.sh" which is located on it's won folder. 
 
 
-# SuperSet Deployment :
+```bash
+git clone git@github.com:opendatahub-io-contrib/datamesh-platform.git
+```bash
+
+Navigate to Data Mesh cloned director " cd datamesh-platform/deployment and execute "datamesh-deploy.sh".
+By defautt , depoyment will use datamesh-demo as default namespace in openshift. If you want to change, edit "datamesh-deploy.sh" environment  varible to your own namespace name "export NAMESPACE="datamesh-demo"
+
+```bash
+./datamesh-deploy.sh
+```
+
 

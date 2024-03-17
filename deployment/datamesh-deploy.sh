@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export NAMESPACE="mydatamesh-demo"
+export NAMESPACE="datamesh-demo"
+export OCP_TOKEN="--token=sha256~FEJXr9QjtJ3f0s2kyLPV550GCoYigX29HomsLA--AE8 --server=https://api.osc-cl4.apps.os-climate.org:6443"
 
 echo "Name space used for this deployment :  $NAMESPACE"
 # Get the current working directory

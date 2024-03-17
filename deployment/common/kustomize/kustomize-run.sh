@@ -2,7 +2,9 @@
 
 chmod +x kustomize-build.sh
 
-OC_TOKEN="--token=sha256~4ZWU5DBK8eFQv5E1vtkyA2F6TEk9rmnkxu8NU0cR6JA --server=https://api.osc-cl4.apps.os-climate.org:6443"
+# OC_TOKEN="--token=sha256~4ZWU5DBK8eFQv5E1vtkyA2F6TEk9rmnkxu8NU0cR6JA --server=https://api.osc-cl4.apps.os-climate.org:6443"
+OC_TOKEN="${OCP_TOKEN:-datamesh-demo}"
+NAMESPACE="${NAMESPACE:-datamesh-demo}"
 
 # Set variables for OCP cluster connection
 OCP_SERVER="https://api.your.ocp.cluster.com:6443"
@@ -14,20 +16,26 @@ OCP_PASSWORD="your_password"
 
 if [ -n "$OC_TOKEN" ]; then
     echo "connecting openshift using token."
-    oc login --token=sha256~w2qOfkLErFjbh3A6oqFWpfSL7ofiZl4Jbs9PsTCHV78 --server=https://api.osc-cl4.apps.os-climate.org:6443
-
+    # oc login --token=sha256~czqMpWeElipLLfnVUBbo4z6zWaaJHKBBkLggrnBGicg --server=https://api.osc-cl4.apps.os-climate.org:6443
+    oc login "$OC_TOKEN"
 else
     echo "connecting openshfit using user id & password ."
     # oc login -u "$OCP_USERNAME" -p "$OCP_PASSWORD" "$OCP_SERVER"
 
 fi
 
-# Run kustomize 
+
+# run kustomize to upate namespace from env
+kustomize edit set namespace "$NAMESPACE"
+# Run kustomize build
 
 ./kustomize-build.sh 
 
 # oc adm policy add-scc-to-user anyuid -z trino-defaut
-oc adm policy add-scc-to-user privileged system:serviceaccount:datamesh-demo:trino-defaut
-oc adm policy add-scc-to-user privileged system:serviceaccount:datamesh-demo:superset-serviceaccount
+SERVICE_ACCOUNT_TRINO="system:serviceaccount:${NAMESPACE}:trino-default"
+SERVICE_ACCOUNT_SUPERSET="system:serviceaccount:${NAMESPACE}:superset-serviceaccount"
 
-
+# oc adm policy add-scc-to-user privileged "${SERVICE_ACCOUNT_TRINO}"
+oc adm policy add-scc-to-user anyuid -z trino-default
+# oc adm policy add-scc-to-user privileged trino-default
+# oc adm policy add-scc-to-user privileged "${SERVICE_ACCOUNT_SUPERSET}"

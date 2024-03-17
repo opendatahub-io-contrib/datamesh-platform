@@ -1,5 +1,7 @@
 #!/bin/bash
 
+OC_TOKEN="${OCP_TOKEN:-datamesh-demo}"
+
 chmod +x kustomize-build.sh
 
 OC_TOKEN="--token=sha256~4ZWU5DBK8eFQv5E1vtkyA2F6TEk9rmnkxu8NU0cR6JA --server=https://api.osc-cl4.apps.os-climate.org:6443"
@@ -14,7 +16,7 @@ OCP_PASSWORD="your_password"
 
 if [ -n "$OC_TOKEN" ]; then
     echo "connecting openshift using token."
-    oc login --token=sha256~w2qOfkLErFjbh3A6oqFWpfSL7ofiZl4Jbs9PsTCHV78 --server=https://api.osc-cl4.apps.os-climate.org:6443
+    oc login --token=sha256~czqMpWeElipLLfnVUBbo4z6zWaaJHKBBkLggrnBGicg --server=https://api.osc-cl4.apps.os-climate.org:6443
 
 
 

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-NAMESPACE="datamesh-demo"
+NAMESPACE="${NAMESPACE:-datamesh-demo}"
 
-# chmod +x ./overlays/development
+chmod +x ./overlays/development
 
 # Define the path to your kustomization directory
 KUSTOMIZE_DIR="./overlays/development"

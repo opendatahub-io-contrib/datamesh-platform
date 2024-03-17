@@ -1,0 +1,74 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  labels:
+    app.kubernetes.io/instance: superset
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/part-of: superset
+spec:
+  serviceName: redis
+  replicas: 1
+  updateStrategy:
+    rollingUpdate: {}
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: superset
+      app.kubernetes.io/name: redis
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: superset
+        app.kubernetes.io/name: redis
+    spec:
+      containers:
+        - name: supset-redis
+          # image: registry.redhat.io/rhel8/redis-6
+          image: redis:7.2.4
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: database-password
+          ports:
+            - name: redis
+              containerPort: 6379
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 6
+            successThreshold: 1
+            failureThreshold: 5
+            tcpSocket: 
+              port: 6379
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 5
+            tcpSocket: 
+              port: 6379
+          resources:
+            limits:
+              memory: 512Mi
+          volumeMounts:
+            - name: redis-data
+              mountPath: /var/lib/redis/data
+              subPath:
+  volumeClaimTemplates:
+    - kind: PersistentVolumeClaim
+      apiVersion: v1
+      metadata:
+        name: redis-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 2Gi
+        volumeMode: Filesystem

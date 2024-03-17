@@ -3,7 +3,6 @@ apiVersion: apps/v1
 metadata:
   name: superset
   labels:
-    app: superset
     app.kubernetes.io/part-of: superset
 spec:
   replicas: 1

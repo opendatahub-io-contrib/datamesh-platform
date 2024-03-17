@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# NAMESPACE="${NAMESPACE:-datamesh-demo}"
-NAMESPACE="datamesh-demo"
+NAMESPACE="${NAMESPACE:-datamesh-demo}"
+# NAMESPACE="datamesh-demo"
 
 chmod +x ./overlays/development
 
@@ -34,3 +34,10 @@ fi
 echo "Deployment being executed for $NAMESPACE ."
 
 oc apply -k .
+
+# SERVICE_ACCOUNT_TRINO="system:serviceaccount:${NAMESPACE}:trino-default"
+# SERVICE_ACCOUNT_SUPERSET=system:serviceaccount:${NAMESPACE}:superset-serviceaccount"
+
+# oc adm policy add-scc-to-user custom-scc "${SERVICE_ACCOUNT_TRINO}"
+# oc adm policy add-scc-to-user custom-scc "${SERVICE_ACCOUNT_SUPERSET}"
+

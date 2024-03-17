@@ -2,7 +2,8 @@
 
 chmod +x kustomize-build.sh
 
-OC_TOKEN="--token=sha256~ZWqVO_9d1zUaETj5fku0HGq5IQNAyCyE6e3_OMpK5_w --server=https://api.osc-cl4.apps.os-climate.org:6443"
+# OC_TOKEN="--token=sha256~czqMpWeElipLLfnVUBbo4z6zWaaJHKBBkLggrnBGicg --server=https://api.osc-cl4.apps.os-climate.org:6443"
+OC_TOKEN="${OCP_TOKEN:-datamesh-demo}"
 
 # Set variables for OCP cluster connection
 OCP_SERVER="https://api.your.ocp.cluster.com:6443"
@@ -14,7 +15,8 @@ OCP_PASSWORD="your_password"
 
 if [ -n "$OC_TOKEN" ]; then
     echo "connecting openshift using token."
-    oc login --token=sha256~w2qOfkLErFjbh3A6oqFWpfSL7ofiZl4Jbs9PsTCHV78 --server=https://api.osc-cl4.apps.os-climate.org:6443
+    # oc login --token=sha256~w2qOfkLErFjbh3A6oqFWpfSL7ofiZl4Jbs9PsTCHV78 --server=https://api.osc-cl4.apps.os-climate.org:6443
+    oc login "$OC_TOKEN"
 
 else
     echo "connecting openshfit using user id & password ."
