@@ -37,7 +37,10 @@ Each data mesh component has its own deployment manifest(s) in its own directory
 git clone git@github.com:opendatahub-io-contrib/datamesh-platform.git
 ```
 # Deploy complete Data Mesh components 
-Navigate to the Data Mesh cloned directory "cd /datamesh-platform/deployment" and execute "datamesh-deploy.sh". By default , deployment will use datamesh-demo as default namespace name and create new name space in openshift. If you want to change it your own namespace, edit "datamesh-deploy.sh" environment variable to your own namespace name "export NAMESPACE=< your name space>
+
+Navigate to the Data Mesh cloned directory "cd /datamesh-platform/deployment" and execute "datamesh-deploy.sh". By default , deployment will use datamesh-demo as default namespace name and create new name space in openshift. Changing name space,  edit "datamesh-deploy.sh" environment variable to the namespace name that need to be change
+
+    "export NAMESPACE=< your name space>
 
 ```bash
 ./datamesh-deploy.sh
@@ -50,7 +53,6 @@ Navigate to the Data Mesh cloned directory "cd /datamesh-platform/deployment" an
     ---
     --
         OC_TOKEN="${OCP_TOKEN:-datamesh-demo}"
-
     ---
 
 
