@@ -30,7 +30,7 @@ Each data mesh compoent has it's own deployment manifest(s) on its own directory
 
 ```bash
 git clone git@github.com:opendatahub-io-contrib/datamesh-platform.git
-```bash
+```
 
 Navigate to Data Mesh cloned director " cd datamesh-platform/deployment and execute "datamesh-deploy.sh".
 By defautt , depoyment will use datamesh-demo as default namespace in openshift. If you want to change, edit "datamesh-deploy.sh" environment  varible to your own namespace name "export NAMESPACE="datamesh-demo"
