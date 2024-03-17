@@ -31,11 +31,4 @@ kustomize edit set namespace "$NAMESPACE"
 
 ./kustomize-build.sh 
 
-# oc adm policy add-scc-to-user anyuid -z trino-defaut
-SERVICE_ACCOUNT_TRINO="system:serviceaccount:${NAMESPACE}:trino-default"
-SERVICE_ACCOUNT_SUPERSET="system:serviceaccount:${NAMESPACE}:superset-serviceaccount"
-
-# oc adm policy add-scc-to-user privileged "${SERVICE_ACCOUNT_TRINO}"
 oc adm policy add-scc-to-user anyuid -z trino-default
-# oc adm policy add-scc-to-user privileged trino-default
-# oc adm policy add-scc-to-user privileged "${SERVICE_ACCOUNT_SUPERSET}"
