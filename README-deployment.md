@@ -40,7 +40,7 @@ git clone git@github.com:opendatahub-io-contrib/datamesh-platform.git
 
 Navigate to the Data Mesh cloned directory **"cd /datamesh-platform/deployment"** and execute "datamesh-deploy.sh". By default , deployment will use datamesh-demo as default namespace name and create new name space in openshift. Changing name space,  edit "datamesh-deploy.sh" environment variable to the namespace name that need to be change
 
-    **Bold Text** "export NAMESPACE=< your name space> __Bold Text__
+    **export NAMESPACE=<your name space>**
 
 ```bash
 ./datamesh-deploy.sh
