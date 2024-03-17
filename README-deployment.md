@@ -21,6 +21,8 @@ The following are the bare minimum compoments required to build Data Mesh patter
 
 # Deployment instruction :
 
+Note : This deployment is just for development purpose ,  not for prodction use. 
+
 The main objectibve of Data mesh deployment is to deploy all components in few mintues by executing simple one shell scripts. 
 
 Each data mesh compoent has it's own deployment manifest(s) on its own directory in deployment folder as shown in a above screen shot. You can deploy all Data Mesh components in one shot by execting "datamesh-deploy.sh" or you can deploy individual compoent by executing "kustomize-run.sh" which is located on it's won folder. 
@@ -36,5 +38,4 @@ By defautt , depoyment will use datamesh-demo as default namespace in openshift.
 ```bash
 ./datamesh-deploy.sh
 ```
-
 
