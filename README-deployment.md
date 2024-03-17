@@ -21,26 +21,26 @@ The following are the bare minimum compoments required to build Data Mesh patter
 
 # Deployment instruction :
 
-Note : This deployment is just for development purpose ,  not for prodction use. 
+Note : This is just for development purpose ,  not for prodction use. 
 
-# prerquists 
+# Prerequisites 
 
-[Kustomize ] (https://kubectl.docs.kubernetes.io/installation/kustomize/). Download Kustomize, if you don't have it from here.
+**Bold Text** [Kustomize ] (https://kubectl.docs.kubernetes.io/installation/kustomize/). Download Kustomize, if you don't have it from here.
 
-Openshift 4.X
+Openshift 4.X __Bold Text__
 
-The main objective of the Data mesh deployment is to deploy all components in a few minutes by executing simple one shell scripts.
+The main objective of the Data mesh deployment is to deploy all components in a few minutes by executing a simple script.
 
-Each data mesh component has its own deployment manifest(s) in its own directory in the deployment folder as shown in the above screen shot. You can deploy all Data Mesh components in one shot by executing "datamesh-deploy.sh" or you can deploy individual compoent by executing script "kustomize-run.sh" which is located on its own folder.
+Each Data Mesh component has its own deployment manifest(s) in its own directory in the **Bold Text** deployment/<componnent>/Kustomize/Base and Overlay __Bold Text__ folder as shown in the above screen shot. You can deploy all Data Mesh components in one shot by executing "datamesh-deploy.sh" or you can deploy individual compoent by executing script "kustomize-run.sh" which is located on its own folder.
 
 ```bash
 git clone git@github.com:opendatahub-io-contrib/datamesh-platform.git
 ```
 # Deploy complete Data Mesh components 
 
-Navigate to the Data Mesh cloned directory "cd /datamesh-platform/deployment" and execute "datamesh-deploy.sh". By default , deployment will use datamesh-demo as default namespace name and create new name space in openshift. Changing name space,  edit "datamesh-deploy.sh" environment variable to the namespace name that need to be change
+Navigate to the Data Mesh cloned directory **Bold Text** "cd /datamesh-platform/deployment" __Bold Text__ and execute "datamesh-deploy.sh". By default , deployment will use datamesh-demo as default namespace name and create new name space in openshift. Changing name space,  edit "datamesh-deploy.sh" environment variable to the namespace name that need to be change
 
-    "export NAMESPACE=< your name space>
+    **Bold Text** "export NAMESPACE=< your name space> __Bold Text__
 
 ```bash
 ./datamesh-deploy.sh
@@ -48,11 +48,11 @@ Navigate to the Data Mesh cloned directory "cd /datamesh-platform/deployment" an
 
 # Deploy individual Data Mesh components. 
  
- An individual Data Mesh compoent can be deployed by executing "kustomize-run.sh" script which is located on its own folder. This script use "Datamesh-demo" as a default namespace. If namespace need to be changed , script need to be changed to the prefered namespace. 
+ An individual Data Mesh compoent can be deployed by executing **Bold Text**  "kustomize-run.sh" __Bold Text__ script which is located on its own folder. This script use **Bold Text** "Datamesh-demo" __Bold Text__ as a default namespace. If namespace need to be changed , script need to be changed to the prefered namespace. 
     replace the following to change namespce in "kustomize-run.sh"
     ---
     --
-        OC_TOKEN="${OCP_TOKEN:-datamesh-demo}"
+      **Bold Text**  OC_TOKEN="${OCP_TOKEN:-datamesh-demo}" __Bold Text__
     ---
 
 
