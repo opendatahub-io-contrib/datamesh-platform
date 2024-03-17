@@ -31,7 +31,11 @@ Note : This is just for development purpose ,  not for prodction use.
 
 The main objective of the Data mesh deployment is to deploy all components in a few minutes by executing a simple script.
 
-Each Data Mesh component has its own deployment manifest(s) in its own directory in the **deployment/<componnent>/Kustomize/Base and Overlay**folder as shown in the above screen shot. You can deploy all Data Mesh components in one shot by executing "datamesh-deploy.sh" or you can deploy individual compoent by executing script "kustomize-run.sh" which is located on its own folder.
+Each Data Mesh component has its own deployment manifest(s) in its own directory in the **deployment/<componnent>/Kustomize/Base and Overlay**folder as shown in the above screen shot. You can deploy all Data Mesh components at once by executing "datamesh-deploy.sh" or can deployed as an individual compoent by executing script **"kustomize-run.sh"** which is located on its own folder. 
+
+Deployment manifests are structured based on Kustomize standard. All baseline deloyment artifacts are placed into folder **deployment/<datamesh componet>/kustomize/base/deployment-manifest and environment specific manifests are placed into **../overlay/environment** 
+
+# clone Git repo 
 
 ```bash
 git clone git@github.com:opendatahub-io-contrib/datamesh-platform.git
