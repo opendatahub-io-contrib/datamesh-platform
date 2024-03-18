@@ -22,7 +22,7 @@ if oc get project "$NAMESPACE" >/dev/null 2>&1; then
 else
     echo "Project $NAMESPACE does not exist. Creating..."
     oc new-project "$NAMESPACE"
-     oc project "$NAMESPACE"
+    oc project "$NAMESPACE"
     echo "Project $NAMESPACE created."
 
 fi

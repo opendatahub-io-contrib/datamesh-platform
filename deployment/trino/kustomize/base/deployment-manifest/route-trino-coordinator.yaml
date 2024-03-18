@@ -2,6 +2,9 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: trino
+  labels:
+    app.kubernetes.io/instance: trino
+    app.kubernetes.io/name: trino
 spec:
   path: /
   to:

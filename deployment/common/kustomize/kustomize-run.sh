@@ -2,7 +2,7 @@
 
 chmod +x kustomize-build.sh
 
-OC_TOKEN="${OCP_TOKEN:-datamesh-demo}"
+OC_TOKEN="--token=${OCP_TOKEN:-datamesh-demo} --server=${OCP_SERVER:-datamesh-demo}"
 NAMESPACE="${NAMESPACE:-datamesh-demo}"
 
 # Set variables for OCP cluster connection
@@ -14,6 +14,7 @@ OCP_PASSWORD="${OCP_PASSWORD:-password}"
 
 if [ -n "$OC_TOKEN" ]; then
     echo "connecting openshift using token."
+    echo "$OC_TOKEN"
     oc login "$OC_TOKEN"
 else
     echo "connecting openshfit using user id & password ."
@@ -21,9 +22,7 @@ else
 
 fi
 
-# run kustomize to upate namespace from env
-
-kustomize edit set namespace "$NAMESPACE"
+# kustomize edit set namespace "$NAMESPACE"
 
 # Run kustomize build
 
@@ -31,3 +30,4 @@ kustomize edit set namespace "$NAMESPACE"
 
 # add securiy context for anyuid
 oc adm policy add-scc-to-user anyuid -z trino-default
+oc adm policy add-scc-to-user anyuid -z superset-serviceaccount

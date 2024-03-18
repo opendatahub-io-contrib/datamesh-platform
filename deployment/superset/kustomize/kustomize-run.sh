@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OC_TOKEN="${OCP_TOKEN:-datamesh-demo}"
+OC_TOKEN="--token=${OCP_TOKEN:-datamesh-demo} --server=${OCP_SERVER:-datamesh-demo}"
 
 chmod +x kustomize-build.sh
 

@@ -19,7 +19,7 @@ resources:
 - ./deployment-manifest/configmap-superset.yaml
 - ./deployment-manifest/secret-superset-config.yaml
 - ./deployment-manifest/secret-superset.yaml
-- ./deployment-manifest/service-account-superset.yaml
+# - ./deployment-manifest/service-account-superset.yaml
 - ./deployment-manifest/deployment-superset.yaml
 - ./deployment-manifest/deployment-superset-worker.yaml
 - ./deployment-manifest/service-superset.yaml

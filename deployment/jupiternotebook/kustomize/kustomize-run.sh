@@ -2,7 +2,7 @@
 
 chmod +x kustomize-build.sh
 
-OC_TOKEN="${OCP_TOKEN:-datamesh-demo}"
+OC_TOKEN="--token=${OCP_TOKEN:-datamesh-demo} --server=${OCP_SERVER:-datamesh-demo}"
 
 # Set variables for OCP cluster connection
 OCP_SERVER="${OCP_SERVER:-https://api.your.ocp.cluster.com:6443}"
