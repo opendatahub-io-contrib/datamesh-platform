@@ -49,6 +49,7 @@ git clone git@github.com:opendatahub-io-contrib/datamesh-platform.git
 
 Navigate to the Data Mesh cloned directory **"cd deployment"** and run "datamesh-deploy.sh". This required Openshift host and login credtials and these informations are in config.properties file located in the deployment directory.  By default , deployment will use datamesh-demo as default namespace, if not specified in the config.properties
 
+Before start deployment script , update openshift credential and namespsce that specific to your environment to **config.properties** file
 
 ```bash
 ./datamesh-deploy.sh
