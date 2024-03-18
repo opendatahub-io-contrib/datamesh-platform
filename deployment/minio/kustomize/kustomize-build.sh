@@ -26,8 +26,6 @@ else
     echo "Project $NAMESPACE created."
 fi
 
-# Switch to the project
-#oc project "$PROJECT_NAME"
-# Run kustomize command
+
 # kustomize build .
 oc apply -k .

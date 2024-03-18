@@ -33,7 +33,8 @@ The main objective of the Data mesh deployment is to deploy all components in a 
 
 Each Data Mesh component has its own deployment manifest(s) in its own directory in the **deployment/<componnent>/Kustomize/Base and Overlay**folder as shown in the above screen shot. You can deploy all Data Mesh components at once by executing "datamesh-deploy.sh" or can deployed as an individual compoent by executing script **"kustomize-run.sh"** which is located on its own folder. 
 
-Deployment manifests are structured based on Kustomize standard. All baseline deloyment artifacts are placed into folder **deployment/<datamesh componet>/kustomize/base/deployment-manifest and environment specific manifests are placed into **../overlay/environment** 
+Deployment manifests are structured based on Kustomize standard. All baseline deloyment artifacts are placed into folder **deployment/<datamesh-componet>/kustomize/base/deployment-manifest and environment specific manifests are placed into **../overlay/environment** 
+
 
 # clone Git repo 
 
@@ -42,8 +43,8 @@ git clone git@github.com:opendatahub-io-contrib/datamesh-platform.git
 ```
 # Deploy complete Data Mesh components 
 
-Navigate to the Data Mesh cloned directory **"cd /datamesh-platform/deployment"** and execute "datamesh-deploy.sh". By default , deployment will use datamesh-demo as default namespace name and create new name space in openshift. Changing name space,  edit "datamesh-deploy.sh" environment variable to the namespace name that need to be change
-    **export NAMESPACE=<your name space>**
+Navigate to the Data Mesh cloned directory **"cd /datamesh-platform/deployment"** and run "datamesh-deploy.sh". This required Openshift host and login credtials and these informations are in config.properties file located in the deployment directory.  By default , deployment will use datamesh-demo as default namespace, if not specified in the config.properties
+
 
 ```bash
 ./datamesh-deploy.sh
@@ -51,12 +52,14 @@ Navigate to the Data Mesh cloned directory **"cd /datamesh-platform/deployment"*
 
 # Deploy individual Data Mesh components. 
  
- An individual Data Mesh compoent can be deployed by executing **"kustomize-run.sh"** script which is located on its own folder. This script use **"Datamesh-demo"** as a default namespace. If namespace need to be changed , script need to be changed to the prefered namespace. 
-    replace the following to change namespce in "kustomize-run.sh"
-    ---
-    --
-      **OC_TOKEN="${OCP_TOKEN:-datamesh-demo}"**
-    ---
+ An individual Data Mesh compoent can be deployed by executing **"kustomize-run.sh"** script which is located on its own folder. This script use **"Datamesh-demo"** as a default namespace. If namespace need to be changed , config.properties file need to be changed to the prefered namespace and openshift login credentials
 
+ Example to run aiflow component 
+ 
+```bash
+cd datamesh-cop/datamesh-platform/deployment
+./setenv.sh
+./airflow/kustomize/kustomize-run.sh
+```
 
 
