@@ -26,8 +26,8 @@ spec:
       containers:
         - name: supset-redis
           # image: registry.redhat.io/rhel8/redis-6
-          image: redis:7.2.4
-          imagePullPolicy: IfNotPresent
+          image: 'quay.io/osclimate/redis:7.2.4'
+          imagePullPolicy: Always
           env:
             - name: REDIS_PASSWORD
               valueFrom:

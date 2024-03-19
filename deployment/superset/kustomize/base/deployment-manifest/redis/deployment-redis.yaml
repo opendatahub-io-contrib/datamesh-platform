@@ -57,11 +57,12 @@ spec:
           ports:
             - containerPort: 6379
               protocol: TCP
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           volumeMounts:
             - name: redis-data
               mountPath: /var/lib/redis/data
           terminationMessagePolicy: File
-          image: redis:7.2.4
+          # image: redis:7.2.4
+          image: 'quay.io/osclimate/redis:7.2.4'
       restartPolicy: Always
       securityContext: {}

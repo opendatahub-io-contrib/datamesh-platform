@@ -56,7 +56,8 @@ spec:
             - name: keystore-p12-volume
               mountPath: /etc/trino/keystore-p12
           terminationMessagePolicy: File
-          image: trinodb/trino
+          # image: trinodb/trino
+          image: 'quay.io/osclimate/trino'
       serviceAccount: trino-default
       volumes:
         - name: config-volume

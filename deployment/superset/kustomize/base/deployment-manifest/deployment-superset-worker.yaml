@@ -23,7 +23,8 @@ spec:
             defaultMode: 420
       initContainers:
         - name: wait-for-postgres-redis
-          image: 'apache/superset:dockerize'
+          # image: 'apache/superset:dockerize'
+          image: 'quay.io/osclimate/superset:dockerize'
           command:
             - /bin/sh
             - '-c'
@@ -36,7 +37,7 @@ spec:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
       containers:
         - resources: {}
           terminationMessagePath: /dev/termination-log
@@ -63,7 +64,7 @@ spec:
           env:
             - name: SUPERSET_PORT
               value: '8088'
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           volumeMounts:
             - name: superset-config
               readOnly: true
@@ -72,7 +73,8 @@ spec:
           envFrom:
             - secretRef:
                 name: superset-env-secret
-          image: 'apachesuperset.docker.scarf.sh/apache/superset:3.0.1'
+          # image: 'apachesuperset.docker.scarf.sh/apache/superset:3.0.1'
+          image: 'quay.io/osclimate/superset:3.0.1'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

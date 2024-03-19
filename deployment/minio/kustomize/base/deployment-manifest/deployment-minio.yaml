@@ -64,12 +64,12 @@ spec:
               protocol: TCP
             - containerPort: 33933
               protocol: TCP
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           volumeMounts:
             - name: storage
               mountPath: /storage
           terminationMessagePolicy: File
-          image: 'docker.io/minio/minio:latest'
+          image: 'quay.io/osclimate/minio:latest'
           args:
             - server
             - /storage

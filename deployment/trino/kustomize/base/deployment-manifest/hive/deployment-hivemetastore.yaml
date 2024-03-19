@@ -70,7 +70,8 @@ spec:
             - name: hive-config
               mountPath: /opt/hive-metastore/conf
           terminationMessagePolicy: File
-          image: naushadh/hive-metastore
+          # image: naushadh/hive-metastore
+          image: 'quay.io/osclimate/hive-metastore'
       volumes:
         - name: hive-config
           emptyDir: {}

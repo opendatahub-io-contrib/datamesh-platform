@@ -69,7 +69,7 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           volumeMounts:
             - name: config-volume
               mountPath: /etc/trino
@@ -80,7 +80,8 @@ spec:
             # - name: truststore-volume
             #   mountPath: /etc/trino/truststore
           terminationMessagePolicy: File
-          image: trinodb/trino
+          # image: trinodb/trino
+          image: 'quay.io/osclimate/trino'
       serviceAccount: trino-default
       volumes:
         - name: config-volume

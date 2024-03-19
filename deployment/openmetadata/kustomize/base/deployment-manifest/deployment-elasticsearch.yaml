@@ -20,8 +20,10 @@ spec:
     spec:
       containers:
         - name: elasticsearch
+          # image: >-
+            # docker.elastic.co/elasticsearch/elasticsearch:7.16.3
           image: >-
-            docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+            quay.io/osclimate/elasticsearch:7.16.3
           ports:
             - containerPort: 9200
               protocol: TCP
@@ -35,7 +37,7 @@ spec:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
