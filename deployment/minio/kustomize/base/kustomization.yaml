@@ -6,3 +6,4 @@ resources:
 - ./deployment-manifest/pvc-minio.yaml
 - ./deployment-manifest/service-minio.yaml
 - ./deployment-manifest/route-minio.yaml
+- ./deployment-manifest/route-minio-api.yaml

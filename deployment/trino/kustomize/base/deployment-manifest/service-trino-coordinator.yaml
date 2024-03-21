@@ -2,6 +2,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: trino
+  labels:
+    app: trino
 spec:
   ports:
     - name: http
