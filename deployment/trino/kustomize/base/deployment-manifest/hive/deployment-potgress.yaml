@@ -14,7 +14,6 @@ spec:
       app.kubernetes.io/name: hive-postgresql
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app.kubernetes.io/instance: hive
         app.kubernetes.io/name: hive-postgresql

@@ -11,13 +11,12 @@ data:
   DB_DRIVER_CLASS: org.postgresql.Driver
   AIRFLOW_PASSWORD: airflow
   WEB_CONF_PERMISSION_POLICY_OPTION: ''
-  PIPELINE_SERVICE_CLIENT_ENDPOINT: 'http://airflow-web.os-climate.svc.cluster.local:8080'
+  PIPELINE_SERVICE_CLIENT_ENDPOINT: 'http://airflow-web.${ENV:NAMESPACE}.svc.cluster.local:8080'
   ELASTICSEARCH_TRUST_STORE_PASSWORD: ''
   DB_PORT: '5432'
   OM_MAX_FAILED_LOGIN_ATTEMPTS: '3'
   OM_LOGIN_ACCESS_BLOCK_TIME: '600'
-  AUTHENTICATION_PUBLIC_KEYS: >-
-    [http://openmetadata.os-climate.svc.cluster.local:8585/api/v1/system/config/jwks]
+  AUTHENTICATION_PUBLIC_KEYS: '[http://openmetadata:8585/api/v1/system/config/jwks]'
   ELASTICSEARCH_PORT: '9200'
   WEB_CONF_HSTS_PRELOAD: 'true'
   WEB_CONF_REFERRER_POLICY_ENABLED: 'false'
@@ -49,7 +48,7 @@ data:
   WEB_CONF_HSTS_INCLUDE_SUBDOMAINS: 'true'
   AUTHORIZER_ADMIN_PRINCIPALS: '[admin]'
   AUTHORIZER_PRINCIPAL_DOMAIN: openmetadata.org
-  OM_URI: 'http://openmetadata.os-climate.svc.cluster.local:8585'
+  OM_URI: 'http://openmetadata.${ENV:NAMESPACE}.svc.cluster.local:8585'
   WEB_CONF_XSS_CSP_ENABLED: 'false'
   ELASTICSEARCH_TRUST_STORE_PATH: ''
   DB_USER: openmetadatadb
@@ -61,7 +60,7 @@ data:
   ELASTICSEARCH_INDEX_MAPPING_LANG: EN
   DB_USER_PASSWORD: redhat123$
   WEB_CONF_XSS_PROTECTION_ON: 'true'
-  SERVER_HOST_API_URL: 'http://openmetadata.os-climate.svc.cluster.local:8585/api'
+  SERVER_HOST_API_URL: 'http://openmetadata.${ENV:NAMESPACE}.svc.cluster.local:8585/api'
   EVENT_MONITOR_BATCH_SIZE: '10'
   WEB_CONF_XSS_CSP_REPORT_ONLY_POLICY: ''
   WEB_CONF_CONTENT_TYPE_OPTIONS_ENABLED: 'false'

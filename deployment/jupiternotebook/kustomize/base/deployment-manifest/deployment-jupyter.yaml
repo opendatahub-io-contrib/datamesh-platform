@@ -9,7 +9,6 @@ spec:
       app: jupyter-notebook
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: jupyter-notebook
       annotations:

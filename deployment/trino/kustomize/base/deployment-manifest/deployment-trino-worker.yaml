@@ -12,7 +12,6 @@ spec:
       app: trino-worker
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: trino-worker
       annotations:
@@ -52,6 +51,11 @@ spec:
             successThreshold: 1
             failureThreshold: 6
           env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
