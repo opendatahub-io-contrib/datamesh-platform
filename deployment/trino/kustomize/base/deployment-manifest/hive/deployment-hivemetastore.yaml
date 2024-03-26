@@ -11,7 +11,6 @@ spec:
       app: hive-metastore
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: hive-metastore
     spec:
@@ -28,6 +27,11 @@ spec:
           terminationMessagePath: /dev/termination-log
           name: hive-metastore
           env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
             - name: HIVE_DB_EXTERNAL
               value: 'true'
             - name: DATABASE_HOST
@@ -54,7 +58,7 @@ spec:
             - name: AWS_SECRET_ACCESS_KEY
               value: minio1234
             - name: S3_ENDPOINT_URL
-              value: 'http://minio.os-climate.svc.cluster.local:9000'
+              value: 'http://minio.$(NAMESPACE).svc.cluster.local:9000'
             - name: S3_BUCKET
               value: pcaf
             - name: S3_PREFIX

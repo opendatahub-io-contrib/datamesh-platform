@@ -25,6 +25,11 @@ spec:
           terminationMessagePath: /dev/termination-log
           name: trino
           env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:

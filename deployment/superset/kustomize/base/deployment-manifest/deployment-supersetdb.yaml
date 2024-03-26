@@ -14,7 +14,6 @@ spec:
       app.kubernetes.io/name: supersetdb
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app.kubernetes.io/instance: superset
         app.kubernetes.io/name: supersetdb
