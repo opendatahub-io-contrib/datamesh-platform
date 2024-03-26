@@ -1,0 +1,151 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: keycloak
+  labels:
+    app: keycloak
+    app.kubernetes.io/part-of: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+      deployment: keycloak
+  template:
+    metadata:
+      name: keycloak
+      creationTimestamp: null
+      labels:
+        app: keycloak
+        deployment: keycloak
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      securityContext: {}
+      containers:
+        - resources:
+            limits:
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 60
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 2
+            failureThreshold: 3
+          terminationMessagePath: /dev/termination-log
+          name: keycloak
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 45
+            timeoutSeconds: 1
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 12
+          env:
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-db-secret
+                  key: POSTGRESQL_USER
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-db-secret
+                  key: POSTGRESQL_PASSWORD
+            - name: KEYCLOAK_ADMIN
+              valueFrom:
+                secretKeyRef:
+                  name: kc-admin-creds
+                  key: KEYCLOAK_ADMIN
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kc-admin-creds
+                  key: KEYCLOAK_ADMIN_PASSWORD
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: JAVA_OPTS_APPEND
+              value: >-
+                -Djgroups.dns.query=keycloak-headless.$(NAMESPACE).svc.cluster.local
+          securityContext: {}
+          ports:
+            - name: https
+              containerPort: 8443
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: cert-volume
+              readOnly: true
+              mountPath: /etc/cert-volume
+          terminationMessagePolicy: File
+          image: 'quay.io/keycloak/keycloak:22.0.1'
+          args:
+            - start
+            - '--hostname-strict=false'
+            - '--https-certificate-file'
+            - /etc/cert-volume/tls.crt
+            - '--https-certificate-key-file'
+            - /etc/cert-volume/tls.key
+            - '--cache-stack'
+            - kubernetes
+            - '--db'
+            - postgres
+            - '--db-url'
+            - >-
+              jdbc:postgresql://keycloak-postgresql.$(NAMESPACE).svc.cluster.local:5432/keycloak
+            - '--db-username'
+            - '${POSTGRESQL_USER}'
+            - '--db-password'
+            - '${POSTGRESQL_PASSWORD}'
+            - '--health-enabled'
+            - 'true'
+            - '--metrics-enabled'
+            - 'true'
+            - '--proxy'
+            - reencrypt
+      serviceAccount: keycloak
+      volumes:
+        - name: cert-volume
+          secret:
+            secretName: keycloak-service
+            defaultMode: 420
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 2
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2024-02-23T02:01:29Z'
+      lastTransitionTime: '2024-02-23T02:01:29Z'
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2024-02-26T00:29:32Z'
+      lastTransitionTime: '2024-02-21T04:53:32Z'
+      reason: NewReplicaSetAvailable
+      message: ReplicaSet "keycloak-5fcb8cc588" has successfully progressed.
