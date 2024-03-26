@@ -12,7 +12,6 @@ spec:
       app.kubernetes.io/name: minio
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app.kubernetes.io/name: minio
       annotations:

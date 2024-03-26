@@ -110,7 +110,7 @@ data:
             'client_kwargs': {
                 'scope': 'openid email profile'
             },
-            'api_base_url': 'https://keycloak-os-climate.apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm',
+            'api_base_url': 'https://keycloak.apps.osc-cl4.apps.${ENV:NAMESPACE}.org/realms/KeycloakRealm',
             'access_token_url': OAUTH_TOKEN_URL,
             'authorize_url': OAUTH_AUTHORIZE_URL,
             'jwks_uri': OAUTH_JWKS_URI,
@@ -131,7 +131,7 @@ data:
 
         def oauth_user_info(self, provider, response):
             if provider == 'keycloak':
-                OIDC_ISSUER = 'https://keycloak-os-climate.apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm'
+                OIDC_ISSUER = 'https://keycloak.apps.osc-cl4.apps.${ENV:NAMESPACE}.org/realms/KeycloakRealm'
                 req = requests.get(OIDC_ISSUER)
                 key_der_base64 = req.json()["public_key"]
                 logging.info("token  1 start")

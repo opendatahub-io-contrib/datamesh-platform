@@ -12,7 +12,6 @@ spec:
       app: superset-worker
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: superset-worker
     spec:
