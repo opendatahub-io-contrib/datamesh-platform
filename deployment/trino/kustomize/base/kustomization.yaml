@@ -33,3 +33,4 @@ resources:
 - ./deployment-manifest/deployment-trino-coordinator.yaml
 - ./deployment-manifest/deployment-trino-worker.yaml
 - ./deployment-manifest/service-trino-coordinator.yaml
+- ./deployment-manifest/route-trino-coordinator.yaml
