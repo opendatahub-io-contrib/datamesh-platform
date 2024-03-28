@@ -90,10 +90,14 @@ spec:
             - name: cert-volume
               readOnly: true
               mountPath: /etc/cert-volume
+            - name: realm-volume
+              readOnly: true
+              mountPath: /opt/keycloak/data/import
           terminationMessagePolicy: File
-          image: 'quay.io/keycloak/keycloak:22.0.1'
+          image: 'quay.io/osclimate/keycloak:22.0.1'
           args:
             - start
+            - '--import-realm'
             - '--hostname-strict=false'
             - '--https-certificate-file'
             - /etc/cert-volume/tls.crt
@@ -116,11 +120,14 @@ spec:
             - 'true'
             - '--proxy'
             - reencrypt
-      serviceAccount: keycloak
       volumes:
         - name: cert-volume
           secret:
             secretName: keycloak-service
+            defaultMode: 420
+        - name: realm-volume
+          configMap:
+            name: keycloak-reaml
             defaultMode: 420
       dnsPolicy: ClusterFirst
   strategy:
@@ -128,24 +135,3 @@ spec:
     rollingUpdate:
       maxUnavailable: 25%
       maxSurge: 25%
-  revisionHistoryLimit: 10
-  progressDeadlineSeconds: 600
-status:
-  observedGeneration: 2
-  replicas: 1
-  updatedReplicas: 1
-  readyReplicas: 1
-  availableReplicas: 1
-  conditions:
-    - type: Available
-      status: 'True'
-      lastUpdateTime: '2024-02-23T02:01:29Z'
-      lastTransitionTime: '2024-02-23T02:01:29Z'
-      reason: MinimumReplicasAvailable
-      message: Deployment has minimum availability.
-    - type: Progressing
-      status: 'True'
-      lastUpdateTime: '2024-02-26T00:29:32Z'
-      lastTransitionTime: '2024-02-21T04:53:32Z'
-      reason: NewReplicaSetAvailable
-      message: ReplicaSet "keycloak-5fcb8cc588" has successfully progressed.

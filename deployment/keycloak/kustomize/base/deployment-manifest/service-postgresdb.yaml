@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: keycloak-postgresql
+  labels:
+    app: keycloak-postgresql
+spec:
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  selector:
+    deployment: keycloak-postgresql
