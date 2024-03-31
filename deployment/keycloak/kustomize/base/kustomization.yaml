@@ -11,7 +11,7 @@ generatorOptions:
 configMapGenerator:
 - name: keycloak-reaml
   files:
-  - ./deployment-manifest/realm/realm.json
+  - ./deployment-manifest/realm/realm-config.json
 
 resources:
 

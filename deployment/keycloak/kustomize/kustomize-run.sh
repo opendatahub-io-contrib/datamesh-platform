@@ -29,5 +29,5 @@ fi
 ./kustomize-build.sh 
 
 # add securiy context for anyuid
-oc adm policy add-scc-to-user anyuid -z trino-default
-oc adm policy add-scc-to-user anyuid -z superset-serviceaccount
+# oc adm policy add-scc-to-user anyuid -z trino-default
+# oc adm policy add-scc-to-user anyuid -z superset-serviceaccount
