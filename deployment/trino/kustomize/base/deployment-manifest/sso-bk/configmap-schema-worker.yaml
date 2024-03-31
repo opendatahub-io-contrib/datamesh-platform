@@ -1,6 +1,6 @@
-kind: ConfigMap
 apiVersion: v1
 metadata:
   name: schemas-volume-worker
   labels:
     app: trino
+  managedFields:

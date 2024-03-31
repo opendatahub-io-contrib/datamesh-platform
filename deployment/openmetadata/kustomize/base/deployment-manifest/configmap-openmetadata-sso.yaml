@@ -11,13 +11,22 @@ data:
   DB_DRIVER_CLASS: org.postgresql.Driver
   AIRFLOW_PASSWORD: airflow
   WEB_CONF_PERMISSION_POLICY_OPTION: ''
+<<<<<<< HEAD
   PIPELINE_SERVICE_CLIENT_ENDPOINT: 'http://airflow-web.${ENV:NAMESPACE}.svc.cluster.local:8080'
+=======
+  PIPELINE_SERVICE_CLIENT_ENDPOINT: 'http://airflow:8080'
+>>>>>>> sso
   ELASTICSEARCH_TRUST_STORE_PASSWORD: ''
   DB_PORT: '5432'
   OM_MAX_FAILED_LOGIN_ATTEMPTS: '3'
   OM_LOGIN_ACCESS_BLOCK_TIME: '600'
+<<<<<<< HEAD
   AUTHENTICATION_PUBLIC_KEYS: >-
     [http://openmetadata.${ENV:NAMESPACE}.svc.cluster.local:8585/api/v1/system/config/jwks,https://keycloak.apps.osc-cl4.apps.${ENV:NAMESPACE}.org/realms/KeycloakRealm/protocol/openid-connect/certs]
+=======
+  # AUTHENTICATION_PUBLIC_KEYS: >-
+  #   [http://openmetadata.${ENV:NAMESPACE}.svc.cluster.local:8585/api/v1/system/config/jwks,https://keycloak.apps.osc-cl4.apps.${ENV:NAMESPACE}.org/realms/KeycloakRealm/protocol/openid-connect/certs]
+>>>>>>> sso
   ELASTICSEARCH_PORT: '9200'
   WEB_CONF_HSTS_PRELOAD: 'true'
   WEB_CONF_REFERRER_POLICY_ENABLED: 'false'
@@ -49,7 +58,11 @@ data:
   WEB_CONF_HSTS_INCLUDE_SUBDOMAINS: 'true'
   AUTHORIZER_ADMIN_PRINCIPALS: '[admin,omd-admin]'
   AUTHORIZER_PRINCIPAL_DOMAIN: openmetadata.org
+<<<<<<< HEAD
   OM_URI: 'http://openmetadata.${ENV:NAMESPACE}.svc.cluster.local:8585'
+=======
+  # OM_URI: 'http://openmetadata.${ENV:NAMESPACE}.svc.cluster.local:8585'
+>>>>>>> sso
   WEB_CONF_XSS_CSP_ENABLED: 'false'
   ELASTICSEARCH_TRUST_STORE_PATH: ''
   DB_USER: openmetadatadb
@@ -61,7 +74,11 @@ data:
   ELASTICSEARCH_INDEX_MAPPING_LANG: EN
   DB_USER_PASSWORD: redhat123$
   WEB_CONF_XSS_PROTECTION_ON: 'true'
+<<<<<<< HEAD
   SERVER_HOST_API_URL: 'http://openmetadata.${ENV:NAMESPACE}.svc.cluster.local:8585/api'
+=======
+  # SERVER_HOST_API_URL: 'http://openmetadata.${ENV:NAMESPACE}.svc.cluster.local:8585/api'
+>>>>>>> sso
   EVENT_MONITOR_BATCH_SIZE: '10'
   WEB_CONF_XSS_CSP_REPORT_ONLY_POLICY: ''
   WEB_CONF_CONTENT_TYPE_OPTIONS_ENABLED: 'false'
@@ -94,11 +111,19 @@ data:
   WEB_CONF_FRAME_OPTION_ENABLED: 'false'
   AIRFLOW_TIMEOUT: '10'
   OM_CUSTOM_LOGO_URL_PATH: ''
+<<<<<<< HEAD
   AUTHENTICATION_CALLBACK_URL: 'https://openmetadata.apps.osc-cl4.apps.${ENV:NAMESPACE}.org/callback'
   WEB_CONF_HSTS_ENABLED: 'false'
   AUTHORIZER_ENABLE_SMTP: 'false'
   AUTHENTICATION_AUTHORITY: >-
     https://keycloak.apps.osc-cl4.apps.${ENV:NAMESPACE}.org/realms/KeycloakRealm/
+=======
+  # AUTHENTICATION_CALLBACK_URL: 'https://openmetadata.apps.osc-cl4.apps.${ENV:NAMESPACE}.org/callback'
+  WEB_CONF_HSTS_ENABLED: 'false'
+  AUTHORIZER_ENABLE_SMTP: 'false'
+  # AUTHENTICATION_AUTHORITY: >-
+    # https://keycloak.apps.osc-cl4.apps.${ENV:NAMESPACE}.org/realms/KeycloakRealm/
+>>>>>>> sso
   OM_DATABASE: openmetadatadb
   AUTHORIZER_ALLOWED_REGISTRATION_DOMAIN: '[all]'
   OM_RESOURCE_PACKAGES: '[]'

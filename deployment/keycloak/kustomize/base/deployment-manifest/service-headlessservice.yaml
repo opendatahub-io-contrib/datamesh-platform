@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: keycloak-headless
+  labels:
+    app: keycloak
+spec:
+  clusterIP: None
+  ports:
+    - protocol: TCP
+      port: 8443
+      targetPort: 8443
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - None
+  type: ClusterIP
+  selector:
+    deployment: keycloak
+status:
+  loadBalancer: {}

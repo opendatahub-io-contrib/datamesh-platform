@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: keycloak-postgresql-claim
+  labels:
+    app.kubernetes.io/name: keycloak-postgresql-claim
+    app.kubernetes.io/instance: keycloak-postgresql-claim
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: "2Gi"

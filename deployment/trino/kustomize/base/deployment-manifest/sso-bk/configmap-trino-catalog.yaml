@@ -6,10 +6,7 @@ data:
   hive.properties: |-
     connector.name=hive
     hive.metastore.uri=thrift://hive-metastore.${ENV:NAMESPACE}.svc.cluster.local:9083
-<<<<<<< HEAD
     hive.allow-drop-table=true
-=======
->>>>>>> sso
     hive.s3.endpoint=http://minio.${ENV:NAMESPACE}.svc.cluster.local:9000
     hive.s3.aws-access-key=minioAdmin
     hive.s3.aws-secret-key=minio1234
@@ -17,7 +14,7 @@ data:
     hive.s3.ssl.enabled=false
     hive.s3.max-connections=100
     hive.non-managed-table-writes-enabled=true
-    # hive.allow-drop-table=true
+    hive.allow-drop-table=true
     hive.parquet.use-column-names=true
     hive.recursive-directories=true
     hive.metastore.authentication.type=NONE

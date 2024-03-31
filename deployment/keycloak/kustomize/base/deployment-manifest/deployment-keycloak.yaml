@@ -90,10 +90,21 @@ spec:
             - name: cert-volume
               readOnly: true
               mountPath: /etc/cert-volume
+<<<<<<< HEAD
           terminationMessagePolicy: File
           image: 'quay.io/keycloak/keycloak:22.0.1'
           args:
             - start
+=======
+            - name: realm-volume
+              readOnly: true
+              mountPath: /opt/keycloak/data/import
+          terminationMessagePolicy: File
+          image: 'quay.io/osclimate/keycloak:22.0.1'
+          args:
+            - start
+            - '--import-realm'
+>>>>>>> sso
             - '--hostname-strict=false'
             - '--https-certificate-file'
             - /etc/cert-volume/tls.crt
@@ -116,17 +127,28 @@ spec:
             - 'true'
             - '--proxy'
             - reencrypt
+<<<<<<< HEAD
       serviceAccount: keycloak
+=======
+>>>>>>> sso
       volumes:
         - name: cert-volume
           secret:
             secretName: keycloak-service
             defaultMode: 420
+<<<<<<< HEAD
+=======
+        - name: realm-volume
+          configMap:
+            name: keycloak-reaml
+            defaultMode: 420
+>>>>>>> sso
       dnsPolicy: ClusterFirst
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 25%
+<<<<<<< HEAD
       maxSurge: 25%
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
@@ -149,3 +171,6 @@ status:
       lastTransitionTime: '2024-02-21T04:53:32Z'
       reason: NewReplicaSetAvailable
       message: ReplicaSet "keycloak-5fcb8cc588" has successfully progressed.
+=======
+      maxSurge: 25%
+>>>>>>> sso

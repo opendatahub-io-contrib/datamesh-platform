@@ -14,15 +14,8 @@ spec:
     metadata:
       labels:
         app: trino-worker
-      annotations:
-        openshift.openshift.io/restartedAt: '2024-03-06T18:49:33.931Z'
     spec:
       restartPolicy: Always
-      serviceAccountName: trino-default
-      # imagePullSecrets:
-      #   - name: registry-credentials
-      # schedulerName: default-scheduler
-      terminationGracePeriodSeconds: 30
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
@@ -51,11 +44,6 @@ spec:
             successThreshold: 1
             failureThreshold: 6
           env:
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: metadata.namespace
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
@@ -66,27 +54,6 @@ spec:
                 secretKeyRef:
                   name: trino-secrets
                   key: minio-secret-key
-            - name: CLUSTER_HOST_URL
-              valueFrom:
-                secretKeyRef:
-                  name: trino-secrets
-                  key: cluster-host-url
-                  
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: metadata.namespace
-            - name: OIDC_ISSUER
-              value: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm
-            - name: OAUTH_AUTHORIZE_URL
-              value: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/auth
-            - name: OAUTH_TOKEN_URL
-              value: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/token
-            - name: JWKS_URI
-              value: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/certs
-            - name: TRINO_OAUTH_SECRET
-              value: lFUbioa0U5VQLm9XyK5y34tMoskuhZLl
             - name: INTER_COMM_SHARED_SECRET
               value: >-
                 kzs71nsYBRr8cysT62zb6P+VT8YsVi/eASfNKUJkvPDce6aof6FLyM/0EDA8qK46P8sD2jXBTTe7cKX0MEqTS2UNZ7YdYWHUUoSG2nLgEryZbqlEkguYWs2dSSYkzv9DIPMtRvGxmNdQ6HGGscrqsFkeK7kSCd6mn5YNskIv6Z665gquqq+SlqV5UylFDcXhB6Z7oWuZ2fq3WONVWtTIhYP73YO8iDORG2afkqPQhRKTw848YQVrcqKAIOX6sirMb5KE1BP0yXz533J71vFuMqkvTBrFV3lkvAq+/7W4iA9Xn9WDJ8TGgcwB7jFOLH9htKYrXtO2XgMsWxizi7XbFzXsPEreqndhZEX7i6U0/K22kCWRy7/lcH+JMQAzq3J+qxl1KqTLVTfu3iSIKUj093/wR0EPcH282a+HMzk/5E1aGk3uV40M/1wQwlEDzBRaGtLtW7tyFHX+sc29nLgkOFAPknwqnYoSR7FDEgO+CrB00zNeY1lS1Xx8OCEfGgg+y5zK7pSMm7cuq8PHjENXCsWOY3xNkJLKsf9mWiWLZhxE1G6EQMG8WPz2r+DhBskTaoHaRPCfcD3/2vaDEjvfK/9kek94g00JcjJB9HQQe3tINmEBxkA8SjIWZe40kcPU0hbKqeA8WFzUgwsB/2KxFvTcPpRvNKseozZZxL/2Dlk=
@@ -94,7 +61,7 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: config-volume
               mountPath: /etc/trino
@@ -102,12 +69,10 @@ spec:
               mountPath: /etc/trino/catalog
             - name: schemas-volume
               mountPath: /etc/trino/schemas
-            # - name: truststore-volume
-            #   mountPath: /etc/trino/truststore
+            - name: truststore-volume
+              mountPath: /etc/trino/truststore
           terminationMessagePolicy: File
-          # image: trinodb/trino
-          image: 'quay.io/osclimate/trino'
-      serviceAccount: trino-default
+          image: trinodb/trino
       volumes:
         - name: config-volume
           configMap:
@@ -121,13 +86,13 @@ spec:
           configMap:
             name: schemas-volume-worker
             defaultMode: 420
-        # - name: truststore-volume
-        #   secret:
-        #     secretName: truststore
-        #     items:
-        #       - key: truststore.jks
-        #         path: truststore.jks
-            # defaultMode: 420
+        - name: truststore-volume
+          secret:
+            secretName: truststore
+            items:
+              - key: truststore.jks
+                path: truststore.jks
+            defaultMode: 420
       dnsPolicy: ClusterFirst
   strategy:
     type: RollingUpdate

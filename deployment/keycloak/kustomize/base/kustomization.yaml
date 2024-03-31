@@ -1,6 +1,33 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+<<<<<<< HEAD
 resources:
 
 #  - ./deployment-manifest/default-pull-secret.yaml
+=======
+generatorOptions:
+ disableNameSuffixHash: true
+#  labels:
+#    kustomize.generated.resource: somevalue
+#  annotations:
+#    annotations.only.for.generated: othervalue
+
+configMapGenerator:
+- name: keycloak-reaml
+  files:
+  - ./deployment-manifest/realm/realm-config.json
+
+resources:
+
+- ./deployment-manifest/secret-keycloak-db.yaml
+- ./deployment-manifest/pvc-podtrgesdb-pvc.yaml
+- ./deployment-manifest/service-postgresdb.yaml
+- ./deployment-manifest/service-headlessservice.yaml
+- ./deployment-manifest/deployment-postgres.yaml
+- ./deployment-manifest/secret-cert-keycloak.yaml
+- ./deployment-manifest/deployment-keycloak.yaml
+- ./deployment-manifest/secret-admin-credential.yaml
+- ./deployment-manifest/service-keycloak.yaml
+- ./deployment-manifest/route-keycloak.yaml
+>>>>>>> sso

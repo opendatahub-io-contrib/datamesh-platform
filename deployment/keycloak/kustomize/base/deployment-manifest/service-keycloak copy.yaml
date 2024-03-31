@@ -1,0 +1,76 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: keycloak
+  namespace: datamesh-demo2
+  uid: 407f6ce8-cadf-4311-b094-153d265755bf
+  resourceVersion: '32205572'
+  creationTimestamp: '2024-03-27T18:50:02Z'
+  labels:
+    app: keycloak
+  annotations:
+    service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1705962267
+    service.beta.openshift.io/serving-cert-secret-name: keycloak-service
+    service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1705962267
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2024-03-27T18:50:02Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:service.beta.openshift.io/serving-cert-secret-name': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:internalTrafficPolicy': {}
+          'f:ports':
+            .: {}
+            'k:{"port":8443,"protocol":"TCP"}':
+              .: {}
+              'f:port': {}
+              'f:protocol': {}
+              'f:targetPort': {}
+          'f:selector': {}
+          'f:sessionAffinity': {}
+          'f:sessionAffinityConfig':
+            .: {}
+            'f:clientIP':
+              .: {}
+              'f:timeoutSeconds': {}
+          'f:type': {}
+    - manager: service-ca-operator
+      operation: Update
+      apiVersion: v1
+      time: '2024-03-27T18:50:02Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:service.alpha.openshift.io/serving-cert-signed-by': {}
+            'f:service.beta.openshift.io/serving-cert-signed-by': {}
+spec:
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+  clusterIP: 172.30.81.6
+  ipFamilies:
+    - IPv4
+  ports:
+    - protocol: TCP
+      port: 8443
+      targetPort: 8443
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - 172.30.81.6
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: ClientIP
+  selector:
+    deployment: keycloak
+status:
+  loadBalancer: {}

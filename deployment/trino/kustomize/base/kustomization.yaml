@@ -18,6 +18,7 @@ resources:
 
 - ./deployment-manifest/hive/deployment-hivemetastore.yaml
 - ./deployment-manifest/hive/service-hivemetastore.yaml
+# sso
 - ./deployment-manifest/ssc-trino-custom.yaml
 - ./deployment-manifest/service-account-trino.yaml
 - ./deployment-manifest/secret-trino-coordoinator.yaml

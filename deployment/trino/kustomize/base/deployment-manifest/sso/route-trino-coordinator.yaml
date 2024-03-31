@@ -12,5 +12,35 @@ spec:
     targetPort: http
   tls:
     termination: edge
+    certificate: |-
+      -----BEGIN CERTIFICATE-----
+      MIIBnDCCAUGgAwIBAgIRAKU97OY1a3hIetfg+9JCfhYwCgYIKoZIzj0EAwIwLTEr
+      MCkGA1UEAxMidHJpbm8ub3MtY2xpbWF0ZS5zdmMuY2x1c3Rlci5sb2NhbDAeFw0y
+      NDAyMjYxODQ1MTZaFw0yNDA1MjYxODQ1MTZaMC0xKzApBgNVBAMTInRyaW5vLm9z
+      LWNsaW1hdGUuc3ZjLmNsdXN0ZXIubG9jYWwwWTATBgcqhkjOPQIBBggqhkjOPQMB
+      BwNCAARBeGnVnj0LIsi0299paINNuHzYHOe9rioAey9zC7cuhS5NAVkDG4yJ0YXG
+      I+32NK09pGljP3oKbrPWgcLn4kY6o0IwQDAOBgNVHQ8BAf8EBAMCAqQwDwYDVR0T
+      AQH/BAUwAwEB/zAdBgNVHQ4EFgQUtW5Z6WcermQbU0veyDAzunUxXmMwCgYIKoZI
+      zj0EAwIDSQAwRgIhAKxkDD3Y8Gm/ZQvpeqrjopPALcHt00g9YK7LVsTrRGTaAiEA
+      92UnKFsixOxpno4xykiivS5V6AxUhPB/8/hvRwZUynQ=
+      -----END CERTIFICATE-----
+    key: |-
+      -----BEGIN EC PRIVATE KEY-----
+      MHcCAQEEII+DKETlB5+JvXb66Af9oEJFxD98/AusLqO7lbpUAA7ZoAoGCCqGSM49
+      AwEHoUQDQgAEQXhp1Z49CyLItNvfaWiDTbh82Bznva4qAHsvcwu3LoUuTQFZAxuM
+      idGFxiPt9jStPaRpYz96Cm6z1oHC5+JGOg==
+      -----END EC PRIVATE KEY-----
+    caCertificate: |-
+      -----BEGIN CERTIFICATE-----
+      MIIBnDCCAUGgAwIBAgIRAKU97OY1a3hIetfg+9JCfhYwCgYIKoZIzj0EAwIwLTEr
+      MCkGA1UEAxMidHJpbm8ub3MtY2xpbWF0ZS5zdmMuY2x1c3Rlci5sb2NhbDAeFw0y
+      NDAyMjYxODQ1MTZaFw0yNDA1MjYxODQ1MTZaMC0xKzApBgNVBAMTInRyaW5vLm9z
+      LWNsaW1hdGUuc3ZjLmNsdXN0ZXIubG9jYWwwWTATBgcqhkjOPQIBBggqhkjOPQMB
+      BwNCAARBeGnVnj0LIsi0299paINNuHzYHOe9rioAey9zC7cuhS5NAVkDG4yJ0YXG
+      I+32NK09pGljP3oKbrPWgcLn4kY6o0IwQDAOBgNVHQ8BAf8EBAMCAqQwDwYDVR0T
+      AQH/BAUwAwEB/zAdBgNVHQ4EFgQUtW5Z6WcermQbU0veyDAzunUxXmMwCgYIKoZI
+      zj0EAwIDSQAwRgIhAKxkDD3Y8Gm/ZQvpeqrjopPALcHt00g9YK7LVsTrRGTaAiEA
+      92UnKFsixOxpno4xykiivS5V6AxUhPB/8/hvRwZUynQ=
+      -----END CERTIFICATE-----
     insecureEdgeTerminationPolicy: Redirect
   wildcardPolicy: None

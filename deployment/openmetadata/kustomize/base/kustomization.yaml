@@ -7,11 +7,23 @@ resources:
 - ./deployment-manifest/deployment-postgres.yaml
 - ./deployment-manifest/service-openmetadatadb.yaml
 
-- ./deployment-manifest/configmap-openmetadata.yaml
+# Non-sso
+# - ./deployment-manifest/configmap-openmetadata.yaml
+#Non-sso
+
+# SSo
+- ./deployment-manifest/configmap-openmetadata-sso.yaml
+# SSO
 - ./deployment-manifest/deployment-elasticsearch.yaml
 - ./deployment-manifest/service-elasticsearch.yaml
 
-- ./deployment-manifest/deployment-openmetadata.yaml
+# SSo
+- ./deployment-manifest/deployment-openmetadata-sso.yaml
+# end sso
+
+# start non-sso
+# - ./deployment-manifest/deployment-openmetadata.yaml
+# end non-sso//
 - ./deployment-manifest/service-openmetadata.yaml
 - ./deployment-manifest/route-openmetadata.yaml
 

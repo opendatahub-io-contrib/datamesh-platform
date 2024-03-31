@@ -1,0 +1,19 @@
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: scc-trino-admin
+allowPrivilegedContainer: true
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+fsGroup:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+users:
+- trino-default   # service account
+requiredDropCapabilities:  # disallow these docker capabilities
+- KILL
+- MKNOD
+- SYS_CHROOT
