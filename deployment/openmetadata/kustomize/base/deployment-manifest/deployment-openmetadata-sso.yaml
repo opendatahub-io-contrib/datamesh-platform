@@ -1,0 +1,93 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: openmetadata
+  labels:
+    app.kubernetes.io/instance: openmetadata
+    app.kubernetes.io/name: openmetadata
+    app.kubernetes.io/part-of: openmetadata
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: openmetadata
+      app.kubernetes.io/name: openmetadata
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: openmetadata
+        app.kubernetes.io/name: openmetadata
+    spec:
+      restartPolicy: Always
+      initContainers:
+        - name: openmetadata-init
+          # image: 'docker.getcollate.io/openmetadata/server:1.2.2'
+          image: 'quay.io/osclimate/openmetadata:1.2.2'
+          command:
+            - sh
+            - '-c'
+            - ./bootstrap/bootstrap_storage.sh migrate-all
+          envFrom:
+            - configMapRef:
+                name: openmetadata
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: "metadata.namespace"
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      terminationGracePeriodSeconds: 5
+      securityContext: {}
+      containers:
+        - resources:
+            limits:
+              cpu: '1'
+              memory: 4Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          name: openmetadata
+          ports:
+            - containerPort: 8585
+              protocol: TCP
+            - containerPort: 8586
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: data-logs
+              mountPath: /opt/openmetadata/logs
+          terminationMessagePolicy: File
+          envFrom:
+            - configMapRef:
+                name: openmetadata
+          image: 'quay.io/osclimate/openmetadata:1.2.2'
+          env: 
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: AUTHENTICATION_PUBLIC_KEYS
+              value: '[http://openmetadata.$(NAMESPACE).svc.cluster.local:8585/api/v1/system/config/jwks,https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/protocol/openid-connect/certs]'
+            - name: OM_URI
+              value: 'http://openmetadata.$(NAMESPACE).svc.cluster.local:8585'
+            - name: SERVER_HOST_API_URL
+              value: 'http://openmetadata.$(NAMESPACE).svc.cluster.local:8585/api'
+            - name: AUTHENTICATION_CALLBACK_URL
+              value: 'https://openmetadata-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/callback'
+            - name: AUTHENTICATION_AUTHORITY
+              value: 'https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/'
+      volumes:
+        - name: data-logs
+          emptyDir: {}
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
