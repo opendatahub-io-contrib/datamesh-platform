@@ -47,14 +47,14 @@ git clone git@github.com:opendatahub-io-contrib/datamesh-platform.git
 ```
 # Deploy complete Data Mesh components 
 
-Navigate to the Data Mesh cloned directory **"cd deployment"** and run "datamesh-deploy.sh". This required Openshift host url and login credtials and these informations are in **config.properties** file located in the deployment directory.  By default , deployment will use datamesh-demo as default namespace, if not specified in the config.properties
+Navigate to the Data Mesh cloned directory **"cd deployment"** and run "datamesh-deploy.sh". This required Openshift host url and login credentials and these informations are in **config.properties** file located in the deployment directory.  By default , deployment will use datamesh-demo as default namespace, if not specified in the config.properties
 
-Before starting deployment script , the following steps must to be done, otherwise all pods will be in error states.
+Before starting deployment script , the following steps must be done, otherwise all pods will be in error states.
 
-1. **openshift credential and namespsce**
-   update openhsift credemntials that specific to your environment to **config.properties** file
+1. **openshift credential and namespace**
+   update openshift credentials that specific to your environment to **config.properties** file
 
-2. **prepare KeyCloak realms** and clientId template specifc to datamesh components. You can find keyclack realm 
+2. **prepare KeyCloak realms** and clientId template specific to datamesh components. You can find keyclack realm 
    template file in **Keycloak/kustomize/deployment-manifest/realm/realm-config.json**. If you don't find it.
    modify **Keycloak/kustomize/generate_realm_config.sh** to add specific to your namespace and keycloak client and user/group and then run the script to generate keycloak realm configurtation for **"Trino, airfkow and OpenMetaData"**.
 
