@@ -31,13 +31,13 @@ Note : This is just for development purpose ,  not for prodction use.
 
 **[Kustomize ] (https://kubectl.docs.kubernetes.io/installation/kustomize/).** Download Kustomize, if you don't have it from here.
 
-**Openshift 4.X**
+**Openshift 4.12**
 
 The main objective of the Data mesh deployment is to deploy all components in a few minutes by executing a simple script.
 
-Each Data Mesh component has its own deployment manifest(s) in its own directory in the **deployment/<componnent>/Kustomize/Base and Overlay**folder as shown in the above screen shot. You can deploy all Data Mesh components at once by executing "datamesh-deploy.sh" or can deployed as an individual compoent by executing script **"kustomize-run.sh"** which is located on its own folder. 
+Each Data Mesh component has its own deployment manifest(s) in its own folder in the **deployment/<component>/Kustomize/Base and Overlay** folder as shown in the above screen shot. You can deploy all Data Mesh components at once by executing "datamesh-deploy.sh" or can deployed as an individual component by executing script **"kustomize-run.sh"** which is located in its own folder. 
 
-Deployment manifests are structured based on Kustomize standard. All baseline deloyment artifacts are placed into folder **deployment/<datamesh-componet>/kustomize/base/deployment-manifest and environment specific manifests are placed into **../overlay/environment** 
+Deployment manifests are structured based on the Kustomize standard. All baseline deployment artifacts are placed into folder **deployment/<datamesh-componet>/kustomize/base/deployment-manifest and environment specific manifests are placed into **../overlay/<environment-development/test/prod>** 
 
 
 # clone Git repo 
@@ -47,9 +47,17 @@ git clone git@github.com:opendatahub-io-contrib/datamesh-platform.git
 ```
 # Deploy complete Data Mesh components 
 
-Navigate to the Data Mesh cloned directory **"cd deployment"** and run "datamesh-deploy.sh". This required Openshift host and login credtials and these informations are in config.properties file located in the deployment directory.  By default , deployment will use datamesh-demo as default namespace, if not specified in the config.properties
+Navigate to the Data Mesh cloned directory **"cd deployment"** and run "datamesh-deploy.sh". This required Openshift host url and login credtials and these informations are in **config.properties** file located in the deployment directory.  By default , deployment will use datamesh-demo as default namespace, if not specified in the config.properties
 
-Before start deployment script , update openshift credential and namespsce that specific to your environment to **config.properties** file
+Before starting deployment script , the following steps must to be done, otherwise all pods will be in error states.
+
+1. **openshift credential and namespsce**
+   update openhsift credemntials that specific to your environment to **config.properties** file
+
+2. **prepare KeyCloak realms** and clientId template specifc to datamesh components. You can find keyclack realm 
+   template file in **Keycloak/kustomize/deployment-manifest/realm/realm-config.json**. If you don't find it.
+   modify **Keycloak/kustomize/generate_realm_config.sh** to add specific to your namespace and keycloak client and user/group and then run the script to generate keycloak realm configurtation for **"Trino, airfkow and OpenMetaData"**.
+
 
 ```bash
 ./datamesh-deploy.sh
