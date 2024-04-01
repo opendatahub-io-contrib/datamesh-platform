@@ -124,7 +124,7 @@
       }
     ],
     "client": {
-      "osclimate-airflow": [
+      "airflow": [
         {
           "id": "13eae654-56e8-47d5-8e54-8a9cf8d8e81b",
           "name": "airflow_Public",
@@ -607,11 +607,11 @@
     {
       "id": "69dcd15e-c5f2-4279-ba55-1b091739fbbd",
       "createdTimestamp": 1709242863853,
-      "username": "service-account-osclimate-airflow",
+      "username": "service-account-airflow",
       "enabled": true,
       "totp": false,
       "emailVerified": false,
-      "serviceAccountClientId": "osclimate-airflow",
+      "serviceAccountClientId": "airflow",
       "disableableCredentialTypes": [],
       "requiredActions": [],
       "realmRoles": [
@@ -619,7 +619,7 @@
         "default-roles-keycloakrealm"
       ],
       "clientRoles": {
-        "osclimate-airflow": [
+        "airflow": [
           "uma_protection"
         ]
       },
@@ -841,7 +841,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "${CLIENT_SECRET}",
       "redirectUris": [
         "https://openmetadata-${NAMESPACE}.${HOST_URL}/*",
         "http://openmetadata-${NAMESPACE}.${HOST_URL}"
@@ -979,8 +979,8 @@
     },
     {
       "id": "c963f24e-3acb-4302-93e3-c18b928baf1a",
-      "clientId": "osclimate-airflow",
-      "name": "osclimate-airflow",
+      "clientId": "airflow",
+      "name": "airflow",
       "description": "",
       "rootUrl": "https://airflow-${NAMESPACE}.${HOST_URL}",
       "adminUrl": "https://airflow-${NAMESPACE}.${HOST_URL}",
@@ -989,7 +989,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "${CLIENT_SECRET}",
       "redirectUris": [
         "http://airflow-${NAMESPACE}.${HOST_URL}/oauth-authorized/keycloak"
       ],
@@ -1034,7 +1034,7 @@
             "access.token.claim": "true",
             "claim.name": "resource_access.${client_id}.roles",
             "jsonType.label": "String",
-            "usermodel.clientRoleMapping.clientId": "osclimate-airflow"
+            "usermodel.clientRoleMapping.clientId": "airflow"
           }
         }
       ],
@@ -1166,7 +1166,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "${CLIENT_SECRET}",
       "redirectUris": [
         "https://trino-${NAMESPACE}.${HOST_URL}/oauth2/callback"
       ],
