@@ -17,20 +17,20 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: argocd-application-controller-clusterrole
-# rules:
-# - apiGroups: [""]
-#   resources: ["namespaces"]
-#   verbs: ["get", "list","watch","patch"]
 rules:
-- apiGroups:
-  - "*"
-  resources:
-  - "*"
-  verbs:
-  - Get
-  - List
-  - Watch
-  - Patch
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "list","watch","patch"]
+# rules:
+# - apiGroups:
+#   - "*"
+#   resources:
+#   - "*"
+#   verbs:
+#   - Get
+#   - List
+#   - Watch
+#   - Patch
 ---
 # For a ClusterRoleBinding (cluster-wide)
 apiVersion: rbac.authorization.k8s.io/v1
