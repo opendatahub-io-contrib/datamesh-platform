@@ -2,13 +2,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: airflow-argo-cd
+  name: datamesh-apps
   namespace: datamesh-ci-cd
 spec:
   destination:
     namespace: datamesh-demo
     server: 'https://kubernetes.default.svc'
-  project: default
+  project: datamesh
   source:
     repoURL: https://github.com/opendatahub-io-contrib/datamesh-platform.git
     path: development/airflow/kustomize/overlays/development
