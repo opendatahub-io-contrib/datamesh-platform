@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: datamesh
-  namespace: datamesh-ci-cd
+  namespace: datamesh101-ci-cd
 spec:
   sourceRepos:
   - '*'
@@ -19,8 +19,9 @@ metadata:
   name: argocd-application-controller-clusterrole
 rules:
 - apiGroups: [""]
-  resources: ["namespaces"]
-  verbs: ["get", "list","watch","patch"]
+  resources: ["*"]
+  # verbs: ["get", "list","watch","patch"]
+  verbs: ["*"]
 # rules:
 # - apiGroups:
 #   - "*"
@@ -40,7 +41,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: datamesh-ci-cd-argocd-application-controller
-  namespace: datamesh-ci-cd
+  namespace: datamesh101-ci-cd
 roleRef:
   kind: ClusterRole
   name: argocd-application-controller-clusterrole
