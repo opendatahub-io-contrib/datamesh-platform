@@ -19,29 +19,19 @@ metadata:
   name: argocd-application-controller-clusterrole
 rules:
 - apiGroups: [""]
-  resources: ["*"]
-  # verbs: ["get", "list","watch","patch"]
-  verbs: ["*"]
-# rules:
-# - apiGroups:
-#   - "*"
-#   resources:
-#   - "*"
-#   verbs:
-#   - Get
-#   - List
-#   - Watch
-#   - Patch
+  resources: ["*",]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 # For a ClusterRoleBinding (cluster-wide)
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: argocd-application-controller-clusterrolebinding
+  namespace: datamesh-argocd
 subjects:
 - kind: ServiceAccount
   name: datamesh-ci-cd-argocd-application-controller
-  namespace: datamesh101-ci-cd
+  namespace: datamesh-argocd
 roleRef:
   kind: ClusterRole
   name: argocd-application-controller-clusterrole
