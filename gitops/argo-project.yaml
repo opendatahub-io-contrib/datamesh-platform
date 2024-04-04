@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: datamesh
-  namespace: datamesh101-ci-cd
+  namespace: datamesh-argocd
 spec:
   sourceRepos:
   - '*'
