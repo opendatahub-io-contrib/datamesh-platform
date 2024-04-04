@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: datamesh-demo-apps
   namespace: datamesh-argocd
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
