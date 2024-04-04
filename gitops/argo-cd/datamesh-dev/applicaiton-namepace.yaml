@@ -3,7 +3,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: datamesh-demo-apps
-  namespace: datamesh101-ci-cd
+  namespace: datamesh-argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: datamesh-demo
@@ -11,7 +13,7 @@ spec:
   project: datamesh
   source:
     repoURL: https://github.com/opendatahub-io-contrib/datamesh-platform.git
-    path: deployment/common/kustomize/overlays/development
+    path: deployment/namespace/kustomize
     targetRevision: argocd
     # plugin:
     #   name: argocd-vault-plugin-kustomize
