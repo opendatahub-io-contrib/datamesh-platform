@@ -12,7 +12,7 @@ spec:
   destination:
     namespace: datamesh-demo
     server: 'https://kubernetes.default.svc'
-  project: datamesh
+  project: default
   source:
     repoURL: https://github.com/opendatahub-io-contrib/datamesh-platform.git
     path: deployment/namespace/kustomize
@@ -24,6 +24,6 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-    - CreateNamespace=true
+    # - CreateNamespace=true
     - Validate=true
     - ServerSideApply=true

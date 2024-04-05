@@ -40,12 +40,12 @@ directories=(
    
     "$parent_directory/deployment/common/kustomize"
     "$parent_directory/deployment/keycloak/kustomize"
-    "$parent_directory/deployment/minio/kustomize"
-    "$parent_directory/deployment/airflow/kustomize"
-    "$parent_directory/deployment/trino/kustomize"
-    "$parent_directory/deployment/openmetadata/kustomize"
-    "$parent_directory/deployment/superset/kustomize"
-    "$parent_directory/deployment/jupiternotebook/kustomize"
+    # "$parent_directory/deployment/minio/kustomize"
+    # "$parent_directory/deployment/airflow/kustomize"
+    # "$parent_directory/deployment/trino/kustomize"
+    # "$parent_directory/deployment/openmetadata/kustomize"
+    # "$parent_directory/deployment/superset/kustomize"
+    # "$parent_directory/deployment/jupiternotebook/kustomize"
 
 )
 
