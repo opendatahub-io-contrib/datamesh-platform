@@ -2,8 +2,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: datamesh-demo-apps
-  namespace: datamesh-argocd
+  name: datamesh-demo-common-apps
+  namespace: openshift-gitops
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
   finalizers:
