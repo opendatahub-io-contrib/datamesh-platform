@@ -12,7 +12,9 @@ fsGroup:
 supplementalGroups:
   type: RunAsAny
 users:
-# - system:serviceaccount:scc-test:trino-default   # service account
+- system:serviceaccount:datamesh-demo:trino-default   # service account
+- system:serviceaccount:datamesh-demo:superset-serviceaccount   # service account
+
 requiredDropCapabilities:  # disallow these docker capabilities
 - KILL
 - MKNOD
