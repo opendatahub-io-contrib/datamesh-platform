@@ -17,7 +17,23 @@ resources:
  - ./deployment-manifest/service-account-trino.yaml
  - ./deployment-manifest/service-account-superset.yaml
 
-
+patches:
+- target:
+    version: security.openshift.io/v1
+    kind: SecurityContextConstraints
+    name: scc-custom-anyuser
+  patch: |-
+    - op: add
+      path: users
+      value: "- system:serviceaccount::trino-default"
+- target:
+    version: security.openshift.io/v1
+    kind: SecurityContextConstraints
+    name: scc-custom-anyuser
+  patch: |-
+    - op: add
+      path: users
+      value: "- system:serviceaccount::superset-serviceaccount"
 # patches:
 # - target:
 #     group: rbac.authorization.k8s.io
