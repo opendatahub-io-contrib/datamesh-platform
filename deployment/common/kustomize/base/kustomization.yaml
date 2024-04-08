@@ -16,6 +16,7 @@ resources:
  - ./deployment-manifest/service-account-default.yaml
  - ./deployment-manifest/service-account-trino.yaml
  - ./deployment-manifest/service-account-superset.yaml
+ - ./deployment-manifest/ssc-trino-custom.yaml
 
 patches:
 - target:
