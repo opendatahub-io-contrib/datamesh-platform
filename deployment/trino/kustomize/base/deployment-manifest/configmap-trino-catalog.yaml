@@ -5,8 +5,8 @@ metadata:
 data:
   hive.properties: |-
     connector.name=hive
-    hive.metastore.uri=thrift://hive-metastore.${ENV:NAMESPACE}.svc.cluster.local:9083
-    hive.s3.endpoint=http://minio.${ENV:NAMESPACE}.svc.cluster.local:9000
+    hive.metastore.uri=thrift://hive-metastore:9083
+    hive.s3.endpoint=http://minio:9000
     hive.s3.aws-access-key=minioAdmin
     hive.s3.aws-secret-key=minio1234
     hive.s3.path-style-access=true
@@ -22,8 +22,8 @@ data:
     hive.s3.socket-timeout=180s
   iceberg.properties: |-
     connector.name=iceberg
-    hive.metastore.uri=thrift://hive-metastore.${ENV:NAMESPACE}.svc.cluster.local:9083
-    hive.s3.endpoint=http://minio.${ENV:NAMESPACE}.svc.cluster.local:9000
+    hive.metastore.uri=thrift://hive-metastore:9083
+    hive.s3.endpoint=http://minio:9000
     hive.s3.aws-access-key=minioAdmin
     hive.s3.aws-secret-key=minio1234
     hive.s3.path-style-access=true
