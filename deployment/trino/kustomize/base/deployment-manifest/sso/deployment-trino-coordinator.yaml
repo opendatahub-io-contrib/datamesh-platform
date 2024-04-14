@@ -45,12 +45,6 @@ spec:
                 secretKeyRef:
                   name: trino-secrets
                   key: cluster-host-url
-                  
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: metadata.namespace
             - name: OIDC_ISSUER
               value: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm
             - name: OAUTH_AUTHORIZE_URL
