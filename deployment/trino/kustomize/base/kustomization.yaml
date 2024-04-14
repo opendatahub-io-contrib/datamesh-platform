@@ -22,8 +22,8 @@ resources:
 # - ./deployment-manifest/ssc-trino-custom.yaml
 - ./deployment-manifest/sso/service-account-trino.yaml
 - ./deployment-manifest/sso/secret-trino-coordoinator.yaml
-- ./deployment-manifest/sso/secret-trino-ssl-keystore-p12.yaml
-- ./deployment-manifest/sso/secret-trino-ssl-keystore.yaml
+# - ./deployment-manifest/sso/secret-trino-ssl-keystore-p12.yaml
+# - ./deployment-manifest/sso/secret-trino-ssl-keystore.yaml
 - ./deployment-manifest/sso/configmap-schema-coordinator.yaml
 - ./deployment-manifest/sso/configmap-schema-worker.yaml
 - ./deployment-manifest/sso/configmap-trino-catalog.yaml
