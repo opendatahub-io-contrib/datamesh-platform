@@ -6,7 +6,6 @@ metadata:
     # app.kubernetes.io/instance: superset
     # app.kubernetes.io/name: redis
     template: redis-persistent-template
-    template.openshift.io/template-instance-owner: ab8fcfb8-53f0-41c4-b516-7880e59cf280
   annotations:
     template.openshift.io/expose-uri: 'redis://{.spec.clusterIP}:{.spec.ports[?(.name=="redis")].port}'
 spec:
