@@ -1,40 +1,15 @@
 kind: DeploymentConfig
 apiVersion: apps.openshift.io/v1
 metadata:
-  annotations:
-    template.alpha.openshift.io/wait-for-ready: 'true'
   name: redis
   labels:
     app.kubernetes.io/part-of: superset
-    template: redis-persistent-template
-    template.openshift.io/template-instance-owner: ab8fcfb8-53f0-41c4-b516-7880e59cf280
 spec:
-  strategy:
-    type: Recreate
-    recreateParams:
-      timeoutSeconds: 600
-    resources: {}
-    activeDeadlineSeconds: 21600
-  triggers:
-    - type: ImageChange
-      imageChangeParams:
-        automatic: true
-        containerNames:
-          - redis
-        from:
-          kind: ImageStreamTag
-          namespace: openshift
-          name: 'redis:6-el8'
-        lastTriggeredImage: >-
-          image-registry.openshift-image-registry.svc:5000/openshift/redis@sha256:0fe724c28eff3eac9e4f416fda660daa7d0402937b67f484f7b8cff5e77e5de3
-    - type: ConfigChange
   replicas: 1
-  test: false
   selector:
     name: redis
   template:
     metadata:
-      creationTimestamp: null
       labels:
         name: redis
     spec:
@@ -82,14 +57,12 @@ spec:
           ports:
             - containerPort: 6379
               protocol: TCP
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           volumeMounts:
             - name: redis-data
               mountPath: /var/lib/redis/data
           terminationMessagePolicy: File
-          image: >-
-            image-registry.openshift-image-registry.svc:5000/openshift/redis@sha256:0fe724c28eff3eac9e4f416fda660daa7d0402937b67f484f7b8cff5e77e5de3
+          # image: redis:7.2.4
+          image: 'quay.io/osclimate/redis:7.2.4'
       restartPolicy: Always
-      terminationGracePeriodSeconds: 30
-      dnsPolicy: ClusterFirst
       securityContext: {}
