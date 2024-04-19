@@ -834,21 +834,21 @@
       "clientId": "open-metadata",
       "name": "",
       "description": "",
-      "rootUrl": "https://openmetadata-datamesh-demo1.apps.osc-cl4.apps.os-climate.org",
-      "adminUrl": "https://openmetadata-datamesh-demo1.apps.osc-cl4.apps.os-climate.org",
-      "baseUrl": "https://openmetadata-datamesh-demo1.apps.osc-cl4.apps.os-climate.org",
+      "rootUrl": "https://openmetadata-datamesh-demo.apps.osc-cl4.apps.os-climate.org",
+      "adminUrl": "https://openmetadata-datamesh-demo.apps.osc-cl4.apps.os-climate.org",
+      "baseUrl": "https://openmetadata-datamesh-demo.apps.osc-cl4.apps.os-climate.org",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "QiEZ6U5enz4YGp9alJg6Cw7g87RIEk4z",
       "redirectUris": [
-        "https://openmetadata-datamesh-demo1.apps.osc-cl4.apps.os-climate.org/*",
-        "http://openmetadata-datamesh-demo1.apps.osc-cl4.apps.os-climate.org"
+        "https://openmetadata-datamesh-demo.apps.osc-cl4.apps.os-climate.org/*",
+        "http://openmetadata-datamesh-demo.apps.osc-cl4.apps.os-climate.org"
       ],
       "webOrigins": [
-        "https://openmetadata-datamesh-demo1.apps.osc-cl4.apps.os-climate.org",
-        "http://openmetadata-datamesh-demo1.apps.osc-cl4.apps.os-climate.org"
+        "https://openmetadata-datamesh-demo.apps.osc-cl4.apps.os-climate.org",
+        "http://openmetadata-datamesh-demo.apps.osc-cl4.apps.os-climate.org"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -982,19 +982,19 @@
       "clientId": "airflow",
       "name": "airflow",
       "description": "",
-      "rootUrl": "https://airflow-datamesh-demo1.apps.osc-cl4.apps.os-climate.org",
-      "adminUrl": "https://airflow-datamesh-demo1.apps.osc-cl4.apps.os-climate.org",
-      "baseUrl": "https://airflow-datamesh-demo1.apps.osc-cl4.apps.os-climate.org",
+      "rootUrl": "https://airflow-datamesh-demo.apps.osc-cl4.apps.os-climate.org",
+      "adminUrl": "https://airflow-datamesh-demo.apps.osc-cl4.apps.os-climate.org",
+      "baseUrl": "https://airflow-datamesh-demo.apps.osc-cl4.apps.os-climate.org",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "QiEZ6U5enz4YGp9alJg6Cw7g87RIEk4z",
       "redirectUris": [
-        "http://airflow-datamesh-demo1.apps.osc-cl4.apps.os-climate.org/oauth-authorized/keycloak"
+        "http://airflow-datamesh-demo.apps.osc-cl4.apps.os-climate.org/oauth-authorized/keycloak"
       ],
       "webOrigins": [
-        "https://airflow-datamesh-demo1.apps.osc-cl4.apps.os-climate.org"
+        "https://airflow-datamesh-demo.apps.osc-cl4.apps.os-climate.org"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -1159,8 +1159,8 @@
       "clientId": "trino",
       "name": "",
       "description": "",
-      "rootUrl": "https://trino-datamesh-demo1.apps.osc-cl4.apps.os-climate.org",
-      "adminUrl": "https://trino-datamesh-demo1.apps.osc-cl4.apps.os-climate.org",
+      "rootUrl": "https://trino-datamesh-demo.apps.osc-cl4.apps.os-climate.org",
+      "adminUrl": "https://trino-datamesh-demo.apps.osc-cl4.apps.os-climate.org",
       "baseUrl": "",
       "surrogateAuthRequired": false,
       "enabled": true,
@@ -1168,10 +1168,10 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "QiEZ6U5enz4YGp9alJg6Cw7g87RIEk4z",
       "redirectUris": [
-        "https://trino-datamesh-demo1.apps.osc-cl4.apps.os-climate.org/oauth2/callback"
+        "https://trino-datamesh-demo.apps.osc-cl4.apps.os-climate.org/oauth2/callback"
       ],
       "webOrigins": [
-        "https://trino-datamesh-demo1.apps.osc-cl4.apps.os-climate.org"
+        "https://trino-datamesh-demo.apps.osc-cl4.apps.os-climate.org"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -1186,7 +1186,7 @@
       "attributes": {
         "client.secret.creation.time": "1708996425",
         "login_theme": "keycloak",
-        "post.logout.redirect.uris": "https://trino-datamesh-demo1.apps.osc-cl4.apps.os-climate.org/ui/logout/logout.html",
+        "post.logout.redirect.uris": "https://trino-datamesh-demo.apps.osc-cl4.apps.os-climate.org/ui/logout/logout.html",
         "oauth2.device.authorization.grant.enabled": "false",
         "use.jwks.url": "false",
         "backchannel.logout.revoke.offline.tokens": "false",

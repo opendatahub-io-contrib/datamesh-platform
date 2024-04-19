@@ -6,9 +6,9 @@ resources:
 - ./deployment-manifest/redis/configmap-redis-script.yaml
 - ./deployment-manifest/redis/configmap-redis-health.yaml
 - ./deployment-manifest/redis/configmap-redis.yaml
-# - ./deployment-manifest/redis/pvc-redis.yaml
-- ./deployment-manifest/redis/statefulset-redis.yaml
-# - ./deployment-manifest/redis/deployment-redis.yaml
+- ./deployment-manifest/redis/pvc-redis.yaml
+# - ./deployment-manifest/redis/statefulset-redis.yaml
+- ./deployment-manifest/redis/deployment-redis.yaml
 - ./deployment-manifest/redis/service-redis.yaml
 
 

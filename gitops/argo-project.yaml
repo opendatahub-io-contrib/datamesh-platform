@@ -1,17 +1,44 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: datamesh
-  namespace: datamesh101-ci-cd
+  name: datamesh-argocd
+  namespace: datamesh-argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
-  sourceRepos:
-  - '*'
-  destinations:
-  - namespace: '*'
-    server: '*'
   clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: '*'
+      kind: '*'
+  destinations:
+    - name: '*'
+      namespace: datamesh-demo
+      server: '*'
+    - name: '*'
+      namespace: datamesh-argocd
+      server: '*'
+  sourceRepos:
+    - '*'
+  sourceNamespaces:
+  - '*'
+  applicationSources:
+    - cluster: '*'
+      namespace: datamesh-demo
+    - cluster: '*'
+      namespace: datamesh-argocd
+# spec:
+#   applicationSources:
+#     - cluster: '*'
+#       namespace: '*'
+#   sourceRepos:
+#   - '*'
+#   destinations:
+#   - namespace: '*'
+#     server: '*'
+#   clusterResourceWhitelist:
+#   - group: '*'
+#     kind: '*'
+#   sourceNamespaces:
+#   - '*'
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole

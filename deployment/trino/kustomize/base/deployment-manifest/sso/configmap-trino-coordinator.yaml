@@ -47,8 +47,8 @@ data:
 
     -XX:GCLockerRetryAllocationCount=32
   password.db: |-
-    admin:$2y$10$rkcRpFHvkflOwkrp3ec65.NBvAOi6MNK4cFhSJfXt2l8KhGuWN0ru
-    jpaulraj:$2y$10$YNeVHgzsSe7pHHb6Md5crucOETlZWPW.CjCyt4TsQB7/Wm9ZXINIG
+    admin:$2y$10$bin5lxJLEZFfUeCMA1CWteHYj0oyrXQ3T4DcDGwhSKnRE1Kq7QZKC
+    jpaulraj:$2y$10$4pCMKY9HIlMTuHKh5xu3Xu8osr3KHNMFSw8fI.wAshR2dkmrfmsu2
   log.properties: |
     io.trino=INFO
     io.trino.server.security.oauth2=DEBUG
@@ -72,6 +72,7 @@ data:
     http-server.process-forwarded=true
     http-server.https.enabled=true
     http-server.https.port=8443
+    
     http-server.https.keystore.path=/etc/trino/keystore/keystore.jks
     http-server.https.keystore.path=/etc/trino/keystore-p12/trino.p12
     http-server.https.keystore.key=redhat2024
@@ -80,7 +81,12 @@ data:
     web-ui.authentication.type=oauth2
     http-server.authentication.allow-insecure-over-http=true
     http-server.authentication.oauth2.issuer=${ENV:OIDC_ISSUER}
-
-    http-server.authentication.oauth2.client-id=trino
+    http-server.authentication.oauth2.client-id=${ENV:CLIENT_ID}
     http-server.authentication.oauth2.client-secret=${ENV:TRINO_OAUTH_SECRET}
     http-server.authentication.oauth2.scopes=openid
+
+    http-server.authentication.oauth2.oidc.use-userinfo-endpoint=true
+    http-server.authentication.oauth2.auth-url=${ENV:OAUTH_AUTHORIZE_URL}
+    http-server.authentication.oauth2.token-url=${ENV:OAUTH_TOKEN_URL}
+    http-server.authentication.oauth2.jwks-url=${ENV:JWKS_URI}
+    http-server.authentication.oauth2.userinfo-url=${ENV:OAUTH_USER_INFO}

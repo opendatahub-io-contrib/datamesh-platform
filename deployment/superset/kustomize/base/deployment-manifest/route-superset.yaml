@@ -6,7 +6,6 @@ metadata:
     app: superset
 spec:
   to:
-    path: /
     kind: Service
     name: superset
     weight: 100

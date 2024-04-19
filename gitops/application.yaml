@@ -2,22 +2,24 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: datamesh-demo-apps
-  namespace: datamesh-argocd
+  namespace: openshift-gitops
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
 spec:
   destination:
     namespace: datamesh-demo
     server: 'https://kubernetes.default.svc'
-  project: datamesh
+  project: default
   source:
     path: gitops/argo-cd/datamesh-dev
     directory:
       include: "*.yaml"
     repoURL: https://github.com/opendatahub-io-contrib/datamesh-platform.git
-    targetRevision: main
+    targetRevision: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
     - Validate=true
-    - CreateNamespace=true
+    # - CreateNamespace=true

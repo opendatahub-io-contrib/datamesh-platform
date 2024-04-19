@@ -29,7 +29,7 @@ spec:
             - '-c'
             - >-
               dockerize -wait "tcp://$DB_HOST:$DB_PORT" -wait
-              "tcp://$REDIS_HOST:$REDIS_PORT" -timeout 120s
+              "tcp://$REDIS_HOST:$REDIS_PORT" -timeout 300s
           envFrom:
             - secretRef:
                 name: superset-env-secret

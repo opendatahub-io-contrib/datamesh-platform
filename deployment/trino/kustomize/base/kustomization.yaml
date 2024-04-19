@@ -19,19 +19,19 @@ resources:
 - ./deployment-manifest/hive/deployment-hivemetastore.yaml
 - ./deployment-manifest/hive/service-hivemetastore.yaml
 # sso
-- ./deployment-manifest/ssc-trino-custom.yaml
-- ./deployment-manifest/service-account-trino.yaml
-- ./deployment-manifest/secret-trino-coordoinator.yaml
-# - ./deployment-manifest/secret-trino-ssl-keystore-p12.yaml
-# - ./deployment-manifest/secret-trino-ssl-keystore.yaml
-- ./deployment-manifest/configmap-schema-coordinator.yaml
-- ./deployment-manifest/configmap-schema-worker.yaml
-- ./deployment-manifest/configmap-trino-catalog.yaml
+# - ./deployment-manifest/ssc-trino-custom.yaml
+- ./deployment-manifest/sso/service-account-trino.yaml
+- ./deployment-manifest/sso/secret-trino-coordoinator.yaml
+# - ./deployment-manifest/sso/secret-trino-ssl-keystore-p12.yaml
+# - ./deployment-manifest/sso/secret-trino-ssl-keystore.yaml
+- ./deployment-manifest/sso/configmap-schema-coordinator.yaml
+- ./deployment-manifest/sso/configmap-schema-worker.yaml
+- ./deployment-manifest/sso/configmap-trino-catalog.yaml
 
-- ./deployment-manifest/configmap-trino-coordinator.yaml
-- ./deployment-manifest/configmap-trino-worker.yaml
+- ./deployment-manifest/sso/configmap-trino-coordinator.yaml
+- ./deployment-manifest/sso/configmap-trino-worker.yaml
 
-- ./deployment-manifest/deployment-trino-coordinator.yaml
-- ./deployment-manifest/deployment-trino-worker.yaml
-- ./deployment-manifest/service-trino-coordinator.yaml
-- ./deployment-manifest/route-trino-coordinator.yaml
+- ./deployment-manifest/sso/deployment-trino-coordinator.yaml
+- ./deployment-manifest/sso/deployment-trino-worker.yaml
+- ./deployment-manifest/sso/service-trino-coordinator.yaml
+- ./deployment-manifest/sso/route-trino-coordinator.yaml

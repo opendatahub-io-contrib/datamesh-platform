@@ -1,0 +1,21 @@
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: scc-custom-anyuser
+allowPrivilegedContainer: true
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+fsGroup:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+users:
+# - system:serviceaccount:${NAMESPACE}:trino-default   # service account
+# - system:serviceaccount:${NAMESPACE}:superset-serviceaccount   # service account
+
+requiredDropCapabilities:  # disallow these docker capabilities
+- KILL
+- MKNOD
+- SYS_CHROOT
