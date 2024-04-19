@@ -2,20 +2,25 @@
 
 This repository is a mono-repository that provides a community pattern of distributed data mesh architecture based on open source components. As a prerequisite, we recommended reading the following foundational articles to understand the concept and approach towards building a data mesh:
 
+> [How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh][1]
+> -- <cite>Zhamak Dehghani, Thoughtworks</cite>
+
+> [Data Mesh Principles and Logical Architecture][2]
+> -- <cite>Zhamak Dehghani, Thoughtworks</cite>
+
 The community pattern implementation is based on 4 foundational principles:
 
 ![images/data-mesh-components.png](images/datamesh-principle.png)
 
-
 1. **Domain Ownership:** The domain ownership principle mandates the domain teams to take responsibility for their data. According to this principle, analytical data should be composed around domains, similar to the team boundaries aligning with the system’s bounded context. Following the domain-driven distributed architecture, analytical and operational data ownership is moved to the domain teams, away from the central data team.
 
-2. **Data-as-Code:** In a data mesh architecture pattern, data ownership is decentralized and domain data product owners are responsible for all capabilities within a given domain, including discoverability, understandability, quality and security of the data. In effect this is achieved by having agile, autonomous, distributed teams building data pipelines as code and data product interfaces on standard tooling and shared infrastructure services. These teams own the code for data pipelines loading, transforming and serving the data as well as the related metadata, and drive the development cycle for their own data domains. In the process, data handling logic is always treated as code, leveraging the same practices we apply to software code versioning and management to manage changes to data and metadata pipelines.The data as a product principle projects a product thinking philosophy onto analytical data. This principle means that there are consumers for the data beyond the domain. The domain team is responsible for satisfying the needs of other domains by providing high-quality data. Basically, domain data should be treated as any other public API.
+2. **Data-as-a-Product:** In a data mesh architecture pattern, data ownership is decentralized and domain data product owners are responsible for all capabilities within a given domain, including discoverability, understandability, quality and security of the data. In effect we achieve this by having agile, autonomous, distributed teams building data pipelines as code and data product interfaces on standard tooling and shared infrastructure services. These teams own the code for data pipelines loading, transforming and serving the data as well as the related metadata, and drive the development cycle for their own data domains. In the process, data handling logic is always treated as code, leveraging the same practices we apply to software code versioning and management to manage changes to data and metadata pipelines.The data as a product principle projects a product thinking philosophy onto analytical data. This principle means that there are consumers for the data beyond the domain. The domain team is responsible for satisfying the needs of other domains by providing high-quality data. Basically, domain data should be treated as any other public API.
 
 3. **Self-service data infrastructure as a platform:** The idea behind the self-serve data infrastructure platform is to adopt platform thinking to data infrastructure. A dedicated data platform team provides domain-agnostic functionality, tools, and systems to build, execute, and maintain interoperable data products for all domains. With its platform, the data platform team enables domain teams to seamlessly consume and create data products.
 
 4. **Federated governance:** The platform requires a layer providing a federated view of the data domains while being able to support the establishment of common operating standards around data / metadata / data lineage management, quality assurance, security and compliance policies, and by extension any cross-cutting supervision concern across all data products. The federated governance principle achieves interoperability of all data products through standardization, which is promoted through the whole data mesh by the governance group. 
 
-The platform is deployed on top of OpenShift Container Platform based on the following component architecture:
+The platform is deployed on top of OpenShift Container Platform and [OpenShift AI][3] based on the following component architecture:
 
 ![images/data-mesh-components.png](images/datamesh-arch.png)
 
@@ -35,4 +40,17 @@ The list of open source components integrated into the pattern and their respect
 | Analytics Dashboard ([Apache Superset][13]) | Software application for data exploration and data visualization able to handle data at petabyte scale. Superset connects to any datasource in Data Commons through Trino, so it allows integrating data from cloud native databases and engines to build rich visualizations and dashboard. The  visualization plug-in architecture makes it easy to build custom visualizations that can be integrated into reactive web application front-end if required. |
 | Data Analysis ([pandas][14]) | Software library written for the Python programming language for data manipulation and analysis. In particular, it offers data structures and operations for manipulating numerical tables and time series that may be required for complex data manipulation in line with requirements of machine learning pipelines |
 
-
+[1]: https://martinfowler.com/articles/data-monolith-to-mesh.html
+[2]: https://martinfowler.com/articles/data-mesh-principles.html
+[3]: https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai
+[4]: https://old.ceph.com/ceph-storage/object-storage/
+[5]: https://iceberg.apache.org/
+[6]: https://trino.io/
+[7]: https://www.pachyderm.com/
+[8]: https://www.getdbt.com/
+[9]: https://greatexpectations.io/
+[10]: https://open-metadata.org/
+[11]: https://airflow.apache.org/
+[12]: https://fybrik.io/v1.2/
+[13]: https://superset.apache.org/
+[14]: https://pandas.pydata.org/
