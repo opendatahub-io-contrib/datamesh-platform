@@ -12,8 +12,8 @@ fsGroup:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:datamesh-demo:trino-default   # service account
-- system:serviceaccount:datamesh-demo:superset-serviceaccount   # service account
+# - system:serviceaccount:${NAMESPACE}:trino-default   # service account
+# - system:serviceaccount:${NAMESPACE}:superset-serviceaccount   # service account
 
 requiredDropCapabilities:  # disallow these docker capabilities
 - KILL
