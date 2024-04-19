@@ -28,15 +28,13 @@ git clone git@github.com:opendatahub-io-contrib/datamesh-platform.git
 ```
 # Prepare keycloak realm 
 
-Most of the Data Mesh component's authendication used keyCloak as the authendication framework
+keyCloak SSO used as the authendication framework for Airflow, Trino and OpenMetaData. To prepare keycloak realm , client ids and user credentials for Airflow , Trino, OpenMetadata , edit **generate_realm_config.sh** as shown below and run the script . make sure that commit the updated realm configuration file to github before run argocd application creation. 
 
-edit **generate_realm_config.sh** to update the following and run the script to prepare SSO (KeyCloak) realm and client ids for Data Mesh components Airflow , Trino, OpenMetadata.
-
-export NAMESPACE= <"namespace">
-export HOST_URL=<"openshift hostname> 
-
+```bash
+export NAMESPACE=<"namespace">
+export HOST_URL=<"openshift hostname">
 ./datamesh-platform/deployment/keyclaok/kustomize/generate_realm_config.sh
-
+```
 
 Navigate to /gitops folder and run the following OC command to create applicaiton which will trigger deployment of all datamesh components
 
