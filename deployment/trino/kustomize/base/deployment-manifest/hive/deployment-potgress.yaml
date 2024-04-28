@@ -81,7 +81,9 @@ spec:
       dnsPolicy: ClusterFirst
       securityContext: {}
   volumeClaimTemplates:
-    - metadata:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
         name: hive-data
       spec:
         accessModes:
