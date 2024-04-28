@@ -33,7 +33,7 @@ keyCloak SSO used as the authendication framework for Airflow, Trino and OpenMet
 ```bash
 export NAMESPACE=<"namespace">
 export HOST_URL=<"openshift hostname">
-./datamesh-platform/deployment/keyclaok/kustomize/generate_realm_config.sh
+./deployment/keycloak/kustomize/generate_realm_config.sh
 ```
 
 Navigate to /gitops folder and run the following OC command to create applicaiton which will trigger deployment of all datamesh components
