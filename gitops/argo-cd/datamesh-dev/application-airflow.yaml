@@ -27,6 +27,6 @@ spec:
     # - CreateNamespace=true
     - Validate=true
     - ServerSideApply=true
-  dependencies:
-    - name: datamesh-demo-common-apps
-      namespace: openshift-gitops
+  # dependencies:
+  #   - name: datamesh-demo-common-apps
+  #     namespace: openshift-gitops

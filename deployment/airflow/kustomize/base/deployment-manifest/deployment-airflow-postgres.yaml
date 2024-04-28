@@ -82,7 +82,9 @@ spec:
       securityContext: {}
       schedulerName: default-scheduler
   volumeClaimTemplates:
-    - metadata:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
         name: aflow-data
       spec:
         accessModes:
