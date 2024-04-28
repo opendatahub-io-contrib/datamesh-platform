@@ -15,7 +15,7 @@ spec:
     directory:
       include: "*.yaml"
     repoURL: https://github.com/opendatahub-io-contrib/datamesh-platform.git
-    targetRevision: argocd
+    targetRevision: main
   syncPolicy:
     automated:
       prune: true

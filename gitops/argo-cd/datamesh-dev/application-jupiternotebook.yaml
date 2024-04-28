@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: https://github.com/opendatahub-io-contrib/datamesh-platform.git
     path: deployment/jupiternotebook/kustomize/overlays/development
-    targetRevision: argocd
+    targetRevision: main
     # plugin:
     #   name: argocd-vault-plugin-kustomize
   syncPolicy:
