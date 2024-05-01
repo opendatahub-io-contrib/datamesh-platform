@@ -1,0 +1,118 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Values.Deployment.CoordinatorName }}
+  labels:
+    app.kubernetes.io/part-of: {{ .Values.global.TrinoSelector}}
+spec:
+  replicas: {{ .Values.Deployment.Replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.global.TrinoSelector}}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.global.TrinoSelector}}
+    spec:
+      restartPolicy: {{ .Values.Deployment.RestartPolicy }}
+      serviceAccountName: {{ .Values.ServiceAccount.Name }}
+      terminationGracePeriodSeconds: {{ .Values.Deployment.terminationGracePeriodSeconds }}
+      securityContext:
+        runAsUser: {{ .Values.Deployment.RunAsUser }}
+        runAsGroup: {{ .Values.Deployment.RunAsGroup }}
+      containers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: {{ .Values.global.TrinoSelector}}
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.Secret.Name }}
+                  key: minio-access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.Secret.Name }}
+                  key: minio-secret-key
+            - name: CLUSTER_HOST_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.Secret.Name }}
+                  key: cluster-host-url
+            - name: OIDC_ISSUER
+              value: https://keycloak-datamesh-demo.$(CLUSTER_HOST_URL)/realms/KeycloakRealm
+            - name: OAUTH_AUTHORIZE_URL
+              value: https://keycloak-datamesh-demo.$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/auth
+            - name: OAUTH_TOKEN_URL
+              value: https://keycloak-datamesh-demo.$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/token
+            - name: JWKS_URI
+              value: https://keycloak-datamesh-demo.$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/certs
+            - name: TRINO_OAUTH_SECRET
+              value: lFUbioa0U5VQLm9XyK5y34tMoskuhZLl
+            - name: INTER_COMM_SHARED_SECRET
+              value: >-
+                kzs71nsYBRr8cysT62zb6P+VT8YsVi/eASfNKUJkvPDce6aof6FLyM/0EDA8qK46P8sD2jXBTTe7cKX0MEqTS2UNZ7YdYWHUUoSG2nLgEryZbqlEkguYWs2dSSYkzv9DIPMtRvGxmNdQ6HGGscrqsFkeK7kSCd6mn5YNskIv6Z665gquqq+SlqV5UylFDcXhB6Z7oWuZ2fq3WONVWtTIhYP73YO8iDORG2afkqPQhRKTw848YQVrcqKAIOX6sirMb5KE1BP0yXz533J71vFuMqkvTBrFV3lkvAq+/7W4iA9Xn9WDJ8TGgcwB7jFOLH9htKYrXtO2XgMsWxizi7XbFzXsPEreqndhZEX7i6U0/K22kCWRy7/lcH+JMQAzq3J+qxl1KqTLVTfu3iSIKUj093/wR0EPcH282a+HMzk/5E1aGk3uV40M/1wQwlEDzBRaGtLtW7tyFHX+sc29nLgkOFAPknwqnYoSR7FDEgO+CrB00zNeY1lS1Xx8OCEfGgg+y5zK7pSMm7cuq8PHjENXCsWOY3xNkJLKsf9mWiWLZhxE1G6EQMG8WPz2r+DhBskTaoHaRPCfcD3/2vaDEjvfK/9kek94g00JcjJB9HQQe3tINmEBxkA8SjIWZe40kcPU0hbKqeA8WFzUgwsB/2KxFvTcPpRvNKseozZZxL/2Dlk=
+          ports:
+            - containerPort: {{ .Values.Deployment.ContainerPort }}
+              protocol: {{ .Values.Deployment.Portocol }}
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/trino
+            - name: catalog-volume
+              mountPath: /etc/trino/catalog
+            - name: schemas-volume
+              mountPath: /etc/trino/schemas
+            # - name: truststore-volume
+            #   mountPath: /etc/trino/truststore
+            - name: keystore-volume
+              mountPath: /etc/trino/keystore
+            - name: keystore-p12-volume
+              mountPath: /etc/trino/keystore-p12
+          terminationMessagePolicy: File
+          # image: trinodb/trino
+          image: {{ .Values.Deployment.Image }}
+      serviceAccount: {{ .Values.ServiceAccount.Name }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Values.ConfigMap.Coordinator.Name }}
+            defaultMode: 420
+        - name: catalog-volume
+          configMap:
+            name:  {{ .Values.ConfigMap.Catalog.Name }}
+            defaultMode: 420
+        - name: schemas-volume
+          configMap:
+            name: {{ .Values.ConfigMap.Schema.CoordinatorName }}
+            defaultMode: 420
+        # - name: truststore-volume
+        #   secret:
+        #     secretName: truststore
+        #     items:
+        #       - key: truststore.jks
+        #         path: truststore.jks
+        #     defaultMode: 420
+        - name: keystore-volume
+          secret:
+            secretName: keystore
+            items:
+              - key: keystore.jks
+                path: keystore.jks
+            defaultMode: 420
+        - name: keystore-p12-volume
+          secret:
+            secretName: keystore-p12
+            items:
+              - key: trino.p12
+                path: trino.p12
+            defaultMode: 420
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: {{ .Values.Deployment.StrategyType }}

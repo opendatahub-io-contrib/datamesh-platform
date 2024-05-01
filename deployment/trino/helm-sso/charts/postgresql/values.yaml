@@ -1,0 +1,20 @@
+service:
+  name: tcp-postgresql
+  protocol: TCP
+  targetPort: tcp-postgresql
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  selector:
+    instance: hive
+
+deployment:
+  label:
+    partof: trino
+  ResourceLimits:
+    cpu: '500m'
+    memory: 2Gi
+  ResourcesRequests:
+    cpu: '100m'
+    memory: 256Mi
+    
+image: 'quay.io/osclimate/postgresql-13:1-101'

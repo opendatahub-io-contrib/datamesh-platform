@@ -1,0 +1,27 @@
+service:
+  protocol: TCP
+  port: 9083
+  targetPort: 9083
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+
+configmap:
+
+deployment:
+  label:
+    partof: trino
+  spec:
+    restartPolicy: Always
+  ResourceLimits:
+    cpu: '4'
+    memory: 2Gi
+  ResourcesRequests:
+    cpu: '2'
+    memory: 1Gi
+  AWS_ACCESS_KEY_ID: minioAdmin
+  AWS_SECRET_ACCESS_KEY: bWluaW8xMjM0    #base64 necoded
+  S3_ENDPOINT_URL: 'http://minio.datamesh.svc.cluster.local:9000'
+  S3_BUCKET: pcaf
+  S3_PREFIX: data
+  containerport: "9083"
+  image: 'quay.io/osclimate/hive-metastore'

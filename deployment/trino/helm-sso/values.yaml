@@ -1,0 +1,10 @@
+global: 
+  HmsSelector: hive-metastore
+  PostgresSelector: postgresql-db
+  TrinoSelector: trino
+  PostgresqlAdminPassword: YWRtaW4xMjMk   #base64 encoded
+  PostgresqlDatabase: hivemetadb
+  PostgresqlPassword: aGl2ZW1ldGExMjMk     #base64 encoded
+  PostgresqlUser: hive
+  PostgresqlPort: "5432"
+  SecretType: Opaque
