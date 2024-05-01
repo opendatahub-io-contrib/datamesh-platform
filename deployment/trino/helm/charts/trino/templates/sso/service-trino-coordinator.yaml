@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.global.TrinoSelector}}-service
+  labels:
+    app: {{ .Values.global.TrinoSelector}}
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: {{ .Values.Service.HttpPort }}
+      targetPort: {{ .Values.Service.HttpPort }}
+    - name: https
+      protocol: TCP
+      port: {{ .Values.Service.HttpsPort }}
+      targetPort: {{ .Values.Service.HttpsPort }}
+  internalTrafficPolicy: Cluster
+  type: {{ .Values.Service.ServiceType }}
+  selector:
+    app: {{ .Values.global.TrinoSelector}}

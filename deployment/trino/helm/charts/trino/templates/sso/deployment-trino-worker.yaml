@@ -1,31 +1,31 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: trino-worker
+  name: {{ .Values.Deployment.WorkerName }}
   labels:
-    app: trino-worker
-    app.kubernetes.io/part-of: trino
+    app: {{ .Values.Deployment.WorkerName }}
+    app.kubernetes.io/part-of: {{ .Values.global.TrinoSelector}}
 spec:
-  replicas: 2
+  replicas: {{ .Values.Deployment.WorkerReplicas }}
   selector:
     matchLabels:
-      app: trino-worker
+      app: {{ .Values.Deployment.WorkerName }}
   template:
     metadata:
       labels:
-        app: trino-worker
+        app: {{ .Values.Deployment.WorkerName }}
       annotations:
         openshift.openshift.io/restartedAt: '2024-03-06T18:49:33.931Z'
     spec:
-      restartPolicy: Always
-      serviceAccountName: trino-default
+      restartPolicy: {{ .Values.Deployment.RestartPolicy }}
+      serviceAccountName: {{ .Values.ServiceAccount.Name }}
       # imagePullSecrets:
       #   - name: registry-credentials
       # schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsUser: {{ .Values.Deployment.RunAsUser }}
+        runAsGroup: {{ .Values.Deployment.RunAsGroup }}
       containers:
         - resources: {}
           readinessProbe:
@@ -39,7 +39,7 @@ spec:
             successThreshold: 1
             failureThreshold: 6
           terminationMessagePath: /dev/termination-log
-          name: trino-worker
+          name: {{ .Values.Deployment.WorkerName }}
           livenessProbe:
             httpGet:
               path: /v1/info
@@ -59,35 +59,34 @@ spec:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: trino-secrets
+                  name: {{ .Values.Secret.Name }}
                   key: minio-access-key
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: trino-secrets
+                  name: {{ .Values.Secret.Name }}
                   key: minio-secret-key
             - name: CLUSTER_HOST_URL
               valueFrom:
                 secretKeyRef:
-                  name: trino-secrets
+                  name: {{ .Values.Secret.Name }}
                   key: cluster-host-url
             - name: OIDC_ISSUER
-              value: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm
+              value: {{ .Values.Deployment.OIDC_ISSUER }}
             - name: OAUTH_AUTHORIZE_URL
-              value: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/auth
+              value: {{ .Values.Deployment.OAUTH_AUTHORIZE_URL }}
             - name: OAUTH_TOKEN_URL
-              value: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/token
+              value: {{ .Values.Deployment.OAUTH_TOKEN_URL }}
             - name: JWKS_URI
-              value: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/certs
+              value: {{ .Values.Deployment.JWKS_URI }}
             - name: TRINO_OAUTH_SECRET
-              value: lFUbioa0U5VQLm9XyK5y34tMoskuhZLl
+              value: {{ .Values.Deployment.TRINO_OAUTH_SECRET }}
             - name: INTER_COMM_SHARED_SECRET
-              value: >-
-                kzs71nsYBRr8cysT62zb6P+VT8YsVi/eASfNKUJkvPDce6aof6FLyM/0EDA8qK46P8sD2jXBTTe7cKX0MEqTS2UNZ7YdYWHUUoSG2nLgEryZbqlEkguYWs2dSSYkzv9DIPMtRvGxmNdQ6HGGscrqsFkeK7kSCd6mn5YNskIv6Z665gquqq+SlqV5UylFDcXhB6Z7oWuZ2fq3WONVWtTIhYP73YO8iDORG2afkqPQhRKTw848YQVrcqKAIOX6sirMb5KE1BP0yXz533J71vFuMqkvTBrFV3lkvAq+/7W4iA9Xn9WDJ8TGgcwB7jFOLH9htKYrXtO2XgMsWxizi7XbFzXsPEreqndhZEX7i6U0/K22kCWRy7/lcH+JMQAzq3J+qxl1KqTLVTfu3iSIKUj093/wR0EPcH282a+HMzk/5E1aGk3uV40M/1wQwlEDzBRaGtLtW7tyFHX+sc29nLgkOFAPknwqnYoSR7FDEgO+CrB00zNeY1lS1Xx8OCEfGgg+y5zK7pSMm7cuq8PHjENXCsWOY3xNkJLKsf9mWiWLZhxE1G6EQMG8WPz2r+DhBskTaoHaRPCfcD3/2vaDEjvfK/9kek94g00JcjJB9HQQe3tINmEBxkA8SjIWZe40kcPU0hbKqeA8WFzUgwsB/2KxFvTcPpRvNKseozZZxL/2Dlk=
+              value: {{ .Values.Deployment.INTER_COMM_SHARED_SECRET }}
           ports:
             - name: http
-              containerPort: 8080
-              protocol: TCP
+              containerPort: {{ .Values.Deployment.ContainerPort }}
+              protocol: {{ .Values.Deployment.Portocol }}
           imagePullPolicy: Always
           volumeMounts:
             - name: config-volume
@@ -100,20 +99,20 @@ spec:
             #   mountPath: /etc/trino/truststore
           terminationMessagePolicy: File
           # image: trinodb/trino
-          image: 'quay.io/osclimate/trino'
-      serviceAccount: trino-default
+          image: {{ .Values.Deployment.Image }}
+      serviceAccount: {{ .Values.ServiceAccount.Name }}
       volumes:
         - name: config-volume
           configMap:
-            name: trino-worker
+            name: {{ .Values.ConfigMap.Worker.Name }}
             defaultMode: 420
         - name: catalog-volume
           configMap:
-            name: trino-catalog
+            name: {{ .Values.ConfigMap.Catalog.Name }}
             defaultMode: 420
         - name: schemas-volume
           configMap:
-            name: schemas-volume-worker
+            name: {{ .Values.ConfigMap.Schema.WorkerName }}
             defaultMode: 420
         # - name: truststore-volume
         #   secret:

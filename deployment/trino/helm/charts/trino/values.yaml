@@ -1,0 +1,206 @@
+Service:
+  HttpPort: 8080
+  HttpsPort: 8443
+  ServiceType: ClusterIP
+
+ServiceAccount:
+  Name: trino-default
+
+Secret:
+  Name: trino-s3
+  MinioAccessKey: minioAdmin
+  MinioSecretKey: YWRtaW4xMjM0    #base64 encoded
+  ClusterHostUrl: apps.osc-cl4.apps.os-climate.org
+
+Route:
+  weight: 100
+  targetPort: http
+  termination: edge
+  insecureEdgeTerminationPolicy: Redirect
+
+ConfigMap:
+  Worker:
+    Name: trino-worker-config-map
+    ConfigProperties: |
+      coordinator=false
+      http-server.http.port=8080
+      query.max-memory=4GB
+      query.max-memory-per-node=1GB
+      discovery.uri=http://trino:8080
+    ExchangeManagerProperties: |
+      exchange-manager.name=filesystem
+      exchange.base-directories=/tmp/trino-local-file-system-exchange-manager
+    JDVConfig: >
+      -server
+
+      -agentpath:/usr/lib/trino/bin/libjvmkill.so
+
+      -Xmx8G
+
+      -XX:+UseG1GC
+
+      -XX:G1HeapRegionSize=32M
+
+      -XX:+ExplicitGCInvokesConcurrent
+
+      -XX:+HeapDumpOnOutOfMemoryError
+
+      -XX:+ExitOnOutOfMemoryError
+
+      -XX:-OmitStackTraceInFastThrow
+
+      -XX:ReservedCodeCacheSize=512M
+
+      -XX:PerMethodRecompilationCutoff=10000
+
+      -XX:PerBytecodeRecompilationCutoff=10000
+
+      -Djdk.attach.allowAttachSelf=true
+
+      -Djdk.nio.maxCachedBufferSize=2000000
+
+      -XX:+UnlockDiagnosticVMOptions
+
+      # Reduce starvation of threads by GClocker, recommend to set about the
+      number of cpu cores (JDK-8192647)
+
+      -XX:GCLockerRetryAllocationCount=32
+    LogProperties: INFO
+    NodeProperties: |
+      node.environment=production
+      node.data-dir=/data/trino
+      plugin.dir=/usr/lib/trino/plugin
+
+  Coordinator:
+    Name: trino-coordinator-config-map
+    PasswordAuthenticatorProperties: |
+      password-authenticator.name=file
+      file.password-file=/etc/trino/password.db
+    GroupMappingProperties: |
+      admins:admin,jpaulraj
+    GroupProviderProperties: |
+      group-provider.name=file
+      file.group-file=/etc/trino/group-mapping.properties
+    JVMConfig: >
+      -server
+      -agentpath:/usr/lib/trino/bin/libjvmkill.so
+      -Xmx8G
+      -XX:+UseG1GC
+      -XX:G1HeapRegionSize=32M
+      -XX:+ExplicitGCInvokesConcurrent
+      -XX:+HeapDumpOnOutOfMemoryError
+      -XX:+ExitOnOutOfMemoryError
+      -XX:-OmitStackTraceInFastThrow
+      -XX:ReservedCodeCacheSize=512M
+      -XX:PerMethodRecompilationCutoff=10000
+      -XX:PerBytecodeRecompilationCutoff=10000
+      -Djdk.attach.allowAttachSelf=true
+      -Djdk.nio.maxCachedBufferSize=2000000
+      -XX:+UnlockDiagnosticVMOptions
+      # Reduce starvation of threads by GClocker, recommend to set about the
+      number of cpu cores (JDK-8192647)
+      -XX:GCLockerRetryAllocationCount=32
+    PasswordDB: |-
+      admin:$2y$10$rkcRpFHvkflOwkrp3ec65.NBvAOi6MNK4cFhSJfXt2l8KhGuWN0ru
+      jpaulraj:$2y$10$YNeVHgzsSe7pHHb6Md5crucOETlZWPW.CjCyt4TsQB7/Wm9ZXINIG
+    LogProperties: |
+      io.trino=INFO
+      io.trino.server.security.oauth2=DEBUG
+      io.trino.server.ui.OAuth2WebUiAuthenticationFilter=DEBUG
+    ExchangeManagerProperties: |
+      exchange-manager.name=filesystem
+      exchange.base-directories=/tmp/trino-local-file-system-exchange-manager
+    ModeProperties: |
+      node.environment=production
+      node.data-dir=/data/trino
+      plugin.dir=/usr/lib/trino/plugin
+    ConfigProperties: |-
+      coordinator=true
+      node-scheduler.include-coordinator=false 
+      discovery-server.enabled=true
+      discovery.uri=http://localhost:8080
+      http-server.http.port=8080
+      http-server.process-forwarded=true
+      http-server.https.enabled=true
+      http-server.https.port=8443
+      http-server.https.keystore.path=/etc/trino/keystore/keystore.jks
+      http-server.https.keystore.path=/etc/trino/keystore-p12/trino.p12
+      http-server.https.keystore.key=redhat2024
+      http-server.authentication.oauth2.oidc.discovery=true
+      web-ui.authentication.type=oauth2
+      http-server.authentication.allow-insecure-over-http=true
+      http-server.authentication.oauth2.issuer=${ENV:OIDC_ISSUER}
+      http-server.authentication.oauth2.client-id=trino
+      http-server.authentication.oauth2.client-secret=${ENV:TRINO_OAUTH_SECRET}
+      http-server.authentication.oauth2.scopes=openid
+  
+  Catalog:
+    Name: trino-catalog-config-map
+    HiveProperties: |-
+      connector.name=hive
+      hive.metastore.uri=thrift://hive-metastore.${ENV:NAMESPACE}.svc.cluster.local:9083
+      hive.s3.endpoint=http://minio.${ENV:NAMESPACE}.svc.cluster.local:9000
+      hive.s3.aws-access-key=minioAdmin
+      hive.s3.aws-secret-key=minio1234
+      hive.s3.path-style-access=true
+      hive.s3.ssl.enabled=false
+      hive.s3.max-connections=100
+      hive.non-managed-table-writes-enabled=true
+      # hive.allow-drop-table=true
+      hive.parquet.use-column-names=true
+      hive.recursive-directories=true
+      hive.metastore.authentication.type=NONE
+      hive.metastore-timeout=180s
+      hive.s3.connect-timeout=180s
+      hive.s3.socket-timeout=180s
+    IcebergProperties: |-
+      connector.name=iceberg
+      hive.metastore.uri=thrift://hive-metastore.${ENV:NAMESPACE}.svc.cluster.local:9083
+      hive.s3.endpoint=http://minio.${ENV:NAMESPACE}.svc.cluster.local:9000
+      hive.s3.aws-access-key=minioAdmin
+      hive.s3.aws-secret-key=minio1234
+      hive.s3.path-style-access=true
+      hive.s3.ssl.enabled=false
+      hive.s3.max-connections=100
+      hive.metastore-timeout=180s
+      hive.s3.connect-timeout=180s
+      hive.s3.socket-timeout=180s
+    TPCDSProperties: |
+      connector.name=tpcds
+      tpcds.splits-per-node=4
+    TPCHProperties: |
+      connector.name=tpch
+      tpch.splits-per-node=4
+  Schema:
+    CoordinatorName: trino-schema-volume-coordinator-config-map
+    CoordinatorLabels:
+      Component: coordinator
+    WorkerName: trino-schema-volume-worker-config-map
+
+Deployment:
+  CoordinatorName: trino-coordinator
+  Replicas: 1
+  RestartPolicy: Always
+  TerminationGracePeriodSeconds: 30
+  RunAsUser: 1000
+  RunAsGroup: 1000
+  OIDC_ISSUER: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm
+  OAUTH_AUTHORIZE_URL: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/auth
+  OAUTH_TOKEN_URL: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/token
+  JWKS_URI: https://keycloak-$(NAMESPACE).$(CLUSTER_HOST_URL)/realms/KeycloakRealm/protocol/openid-connect/certs
+  TRINO_OAUTH_SECRET: bEZVYmlvYTBVNVZRTG05WHlLNXkzNHRNb3NrdWhaTGw=
+  INTER_COMM_SHARED_SECRET: >-
+    kzs71nsYBRr8cysT62zb6P+VT8YsVi/eASfNKUJkvPDce6aof6FLyM/0EDA8qK46P8sD2jXBTTe7cKX0MEqTS2UNZ7YdYWHUUoSG2nLgEryZbqlEkguYWs2dSSYkzv9DIPMtRvGxmNdQ6HGGscrqsFkeK7kSCd6mn5YNskIv6Z665gquqq+SlqV5UylFDcXhB6Z7oWuZ2fq3WONVWtTIhYP73YO8iDORG2afkqPQhRKTw848YQVrcqKAIOX6sirMb5KE1BP0yXz533J71vFuMqkvTBrFV3lkvAq+/7W4iA9Xn9WDJ8TGgcwB7jFOLH9htKYrXtO2XgMsWxizi7XbFzXsPEreqndhZEX7i6U0/K22kCWRy7/lcH+JMQAzq3J+qxl1KqTLVTfu3iSIKUj093/wR0EPcH282a+HMzk/5E1aGk3uV40M/1wQwlEDzBRaGtLtW7tyFHX+sc29nLgkOFAPknwqnYoSR7FDEgO+CrB00zNeY1lS1Xx8OCEfGgg+y5zK7pSMm7cuq8PHjENXCsWOY3xNkJLKsf9mWiWLZhxE1G6EQMG8WPz2r+DhBskTaoHaRPCfcD3/2vaDEjvfK/9kek94g00JcjJB9HQQe3tINmEBxkA8SjIWZe40kcPU0hbKqeA8WFzUgwsB/2KxFvTcPpRvNKseozZZxL/2Dlk=
+  ContainerPort: "8080"
+  Portocol: TCP
+  Image: quay.io/osclimate/trino
+  StrategyType: Recreate
+  WorkerName: trino-worker
+  WorkerReplicas: 2
+
+
+
+
+
+
+
