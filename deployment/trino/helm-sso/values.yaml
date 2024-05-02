@@ -8,3 +8,4 @@ global:
   PostgresqlUser: hive
   PostgresqlPort: "5432"
   SecretType: Opaque
+  InitContainerImage: busybox

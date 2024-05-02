@@ -17,8 +17,8 @@ spec:
       restartPolicy: {{ .Values.deployment.spec.restartPolicy}}
       securityContext: {}
       initContainers:                  #initContainers to wait on prstgres db to start
-      - name: wait-for-postgresql-db
-        image: busybox
+      - name: wait-for-{{ .Values.global.PostgresSelector}}
+        image: {{ .Values.global.InitContainerImage }}
         command:
         - sh
         - -c
