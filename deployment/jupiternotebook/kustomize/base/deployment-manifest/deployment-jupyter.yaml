@@ -19,7 +19,7 @@ spec:
       securityContext: {}
       containers:
         - name: jupyter-notebook
-          image: 'quay.io/osclimate/notebook:1.0'
+          image: 'jupyter/datascience-notebook'
           ports:
             - containerPort: 8888
               protocol: TCP
