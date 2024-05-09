@@ -1,0 +1,6 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ .Values.ConfigMap.Schema.WorkerName }}
+  labels:
+    app: {{ .Values.global.TrinoSelector}}

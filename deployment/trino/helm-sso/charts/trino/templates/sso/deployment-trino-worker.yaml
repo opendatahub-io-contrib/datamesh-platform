@@ -1,0 +1,129 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Values.Deployment.WorkerName }}
+  labels:
+    app: {{ .Values.Deployment.WorkerName }}
+    app.kubernetes.io/part-of: {{ .Values.global.TrinoSelector}}
+spec:
+  replicas: {{ .Values.Deployment.WorkerReplicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.Deployment.WorkerName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.Deployment.WorkerName }}
+      annotations:
+        openshift.openshift.io/restartedAt: '2024-03-06T18:49:33.931Z'
+    spec:
+      restartPolicy: {{ .Values.Deployment.RestartPolicy }}
+      serviceAccountName: {{ .Values.ServiceAccount.Name }}
+      # imagePullSecrets:
+      #   - name: registry-credentials
+      # schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsUser: {{ .Values.Deployment.RunAsUser }}
+        runAsGroup: {{ .Values.Deployment.RunAsGroup }}
+      containers:
+        - resources: {}
+          readinessProbe:
+            httpGet:
+              path: /v1/info
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 20
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          terminationMessagePath: /dev/termination-log
+          name: {{ .Values.Deployment.WorkerName }}
+          livenessProbe:
+            httpGet:
+              path: /v1/info
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 20
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.Secret.Name }}
+                  key: minio-access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.Secret.Name }}
+                  key: minio-secret-key
+            - name: CLUSTER_HOST_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.Secret.Name }}
+                  key: cluster-host-url
+            - name: OIDC_ISSUER
+              value: {{ .Values.Deployment.OIDC_ISSUER }}
+            - name: OAUTH_AUTHORIZE_URL
+              value: {{ .Values.Deployment.OAUTH_AUTHORIZE_URL }}
+            - name: OAUTH_TOKEN_URL
+              value: {{ .Values.Deployment.OAUTH_TOKEN_URL }}
+            - name: JWKS_URI
+              value: {{ .Values.Deployment.JWKS_URI }}
+            - name: TRINO_OAUTH_SECRET
+              value: {{ .Values.Deployment.TRINO_OAUTH_SECRET }}
+            - name: INTER_COMM_SHARED_SECRET
+              value: {{ .Values.Deployment.INTER_COMM_SHARED_SECRET }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.Deployment.ContainerPort }}
+              protocol: {{ .Values.Deployment.Portocol }}
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/trino
+            - name: catalog-volume
+              mountPath: /etc/trino/catalog
+            - name: schemas-volume
+              mountPath: /etc/trino/schemas
+            # - name: truststore-volume
+            #   mountPath: /etc/trino/truststore
+          terminationMessagePolicy: File
+          # image: trinodb/trino
+          image: {{ .Values.Deployment.Image }}
+      serviceAccount: {{ .Values.ServiceAccount.Name }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Values.ConfigMap.Worker.Name }}
+            defaultMode: 420
+        - name: catalog-volume
+          configMap:
+            name: {{ .Values.ConfigMap.Catalog.Name }}
+            defaultMode: 420
+        - name: schemas-volume
+          configMap:
+            name: {{ .Values.ConfigMap.Schema.WorkerName }}
+            defaultMode: 420
+        # - name: truststore-volume
+        #   secret:
+        #     secretName: truststore
+        #     items:
+        #       - key: truststore.jks
+        #         path: truststore.jks
+            # defaultMode: 420
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%

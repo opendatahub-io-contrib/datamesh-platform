@@ -1,0 +1,8 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ .Values.ConfigMap.Schema.CoordinatorName }}
+  labels:
+    app.kubernetes.io/component: {{ .Values.ConfigMap.Schema.CoordinatorLabels.Component }}
+    app.kubernetes.io/name: {{ .Values.global.TrinoSelector}}
+  managedFields:

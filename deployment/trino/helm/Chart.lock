@@ -1,0 +1,9 @@
+dependencies:
+- name: postgresql
+  repository: file://charts/postgresql/
+  version: 1.0.0
+- name: hms
+  repository: file://charts/hms/
+  version: 1.0.0
+digest: sha256:10402138599a51a6402de899af53997f02430c834ac8252e8d36f948bb9ed0e6
+generated: "2024-04-18T21:45:36.450328+05:30"

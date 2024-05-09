@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.global.PostgresSelector}}-service
+  labels:
+    app.kubernetes.io/instance: {{ .Values.service.selector.instance }}
+    app.kubernetes.io/name: {{ .Values.global.PostgresSelector}}
+spec:
+  ports:
+    - name: {{ .Values.service.name }}
+      protocol: {{ .Values.service.protocol }}
+      port: {{ .Values.global.PostgresqlPort }}
+      targetPort: {{ .Values.service.targetPort }}
+  internalTrafficPolicy: {{ .Values.service.internalTrafficPolicy }}
+  type: {{ .Values.service.type }}
+  selector:
+    app.kubernetes.io/instance: {{ .Values.service.selector.instance }}
+    app.kubernetes.io/name: {{ .Values.global.PostgresSelector}}
