@@ -127,7 +127,7 @@ spec:
             defaultMode: 420
         - name: realm-volume
           configMap:
-            name: keycloak-reaml
+            name: keycloak-realm
             defaultMode: 420
       dnsPolicy: ClusterFirst
   strategy:

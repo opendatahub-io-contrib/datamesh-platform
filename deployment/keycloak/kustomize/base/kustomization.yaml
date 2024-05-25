@@ -9,7 +9,7 @@ generatorOptions:
 #    annotations.only.for.generated: othervalue
 
 configMapGenerator:
-- name: keycloak-reaml
+- name: keycloak-realm
   files:
   - ./deployment-manifest/realm/realm-config.json
 
