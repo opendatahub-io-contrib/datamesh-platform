@@ -22,7 +22,7 @@ The community pattern implementation is based on 4 foundational principles:
 
 The platform is deployed on top of OpenShift Container Platform and [OpenShift AI][3] based on the following component architecture:
 
-![images/data-mesh-components.png](images/datamesh-arch.png)
+![images/data-mesh-components.png](images/datamesh-arch-spark.png)
 
 The list of open source components integrated into the pattern and their respective role is summarized below.
 
