@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    {{- include "elasticsearch.labels" . | nindent 4 }}
+spec:
+  ports:
+    - name: request-port
+      protocol: TCP
+      port: {{ .Values.service.requestPort }}
+      targetPort: {{ .Values.service.requestPort }}
+    - name: communication-port
+      protocol: TCP
+      port: {{ .Values.service.communicationPort }}
+      targetPort: {{ .Values.service.communicationPort }}
+  internalTrafficPolicy: Cluster
+  type: {{ .Values.service.type}}
+  selector:
+    {{- include "elasticsearch.selectorLabels" . | nindent 4 }}

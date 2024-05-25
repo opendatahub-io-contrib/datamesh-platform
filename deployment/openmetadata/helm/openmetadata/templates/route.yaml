@@ -1,0 +1,17 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ include "openmetadata.fullname" . }}
+  labels:
+    {{- include "openmetadata.labels" . | nindent 4 }}
+spec:
+  to:
+    kind: Service
+    name: {{ include "openmetadata.fullname" . }}
+    weight: 100
+  port:
+    targetPort: application-connector
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "openmetadata.fullname" . }}
+  labels:
+    {{- include "openmetadata.labels" . | nindent 4 }}
+spec:
+  ports:
+    - name: application-connector
+      protocol: TCP
+      port: {{ .Values.service.appPort }}
+      targetPort: {{ .Values.service.appPort }}
+    - name: admin-connector
+      protocol: TCP
+      port: {{ .Values.service.adminPort }}
+      targetPort: {{ .Values.service.adminPort }}
+  internalTrafficPolicy: Cluster
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "openmetadata.selectorLabels" . | nindent 6 }}

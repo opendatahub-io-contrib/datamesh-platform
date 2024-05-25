@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.volume.claimName }}
+  labels:
+    {{- include "postgres.labels" . | nindent 4 }}
+spec:
+  accessModes: {{ .Values.volume.accessModes }}
+  resources:
+    requests:
+      storage: {{ .Values.volume.storage }}
