@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  # name: default
+  name: spark
+imagePullSecrets:
+- name: spark-quay-secret

@@ -1,0 +1,18 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: spark-master
+  labels:
+    app: spark
+    component: master
+spec:
+  to:
+    kind: Service
+    name: spark-master
+    weight: 100
+  port:
+    targetPort: spark-master-webui
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None

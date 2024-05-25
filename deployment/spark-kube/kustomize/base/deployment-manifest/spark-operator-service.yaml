@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: datamesh-spark-webhook
+  namespace: datamesh-spark-operator
+spec:
+  ports:
+    - port: 443
+      targetPort: 8080
+      name: webhook
+  selector:
+    app.kubernetes.io/name: sparkoperator
+    app.kubernetes.io/version: v2.4.0-v1beta1

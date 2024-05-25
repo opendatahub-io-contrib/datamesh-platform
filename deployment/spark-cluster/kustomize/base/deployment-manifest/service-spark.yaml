@@ -1,0 +1,34 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: spark-master-headless
+spec:
+  ports:
+  clusterIP: None
+  selector:
+    component: spark-master
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: spark-master
+  labels:
+    app: spark
+    component: master
+spec:
+  ports:
+    - name: spark-master
+      protocol: TCP
+      port: 7077
+      targetPort: 7077
+    - name: spark-master-webui
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: spark
+    component: master

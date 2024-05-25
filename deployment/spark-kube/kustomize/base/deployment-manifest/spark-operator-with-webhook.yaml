@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sparkoperator
+  namespace: datamesh-spark-operator
+  labels:
+    app.kubernetes.io/name: sparkoperator
+    app.kubernetes.io/version: v2.4.0-v1beta1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: sparkoperator
+      app.kubernetes.io/version: v2.4.0-v1beta1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: sparkoperator
+        app.kubernetes.io/version: v2.4.0-v1beta1
+      initializers:
+        pending: []
+    spec:
+      serviceAccountName: sparkoperator
+      volumes:
+        - name: webhook-certs
+          secret:
+            secretName: spark-webhook-certs
+      containers:
+        - name: sparkoperator
+          image: gcr.io/spark-operator/spark-operator:v2.4.0-v1beta1-latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: webhook-certs
+              mountPath: /etc/webhook-certs
+          ports:
+            - containerPort: 8080
+          args:
+            - -logtostderr
+            - -enable-webhook=true
+            - -v=2
+            - webhook-svc-namespace=datamesh-spark-operator
+            - webhook-svc-name=datamesh-spark-webhook

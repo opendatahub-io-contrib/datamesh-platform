@@ -1,0 +1,24 @@
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: spark-events-pv
+# spec:
+#   capacity:
+#     storage: 10Gi
+#   accessModes:
+#     - ReadWriteMany
+#   persistentVolumeReclaimPolicy: Retain
+#   storageClassName: slow
+# ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: spark-events-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
+
