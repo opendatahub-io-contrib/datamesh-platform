@@ -12,6 +12,17 @@ configMapGenerator:
 - name: keycloak-realm
   files:
   - ./deployment-manifest/realm/realm-config.json
+patchesStrategicMerge:
+  - ./deployment-manifest/secret-patch.yaml
+
+vars:
+  - name: DEPLOYMENT_UID
+    objref:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: keycloak
+    fieldref:
+      fieldpath: metadata.ui
 
 resources:
 
