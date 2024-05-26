@@ -1,0 +1,37 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  labels:
+    app: spark-cluster-demo
+    kafka-cluster: spark-kafka
+  name: spark-kafka
+spec:
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+  kafka:
+    config:
+      default.replication.factor: 3
+      min.insync.replicas: 2
+      offsets.topic.replication.factor: 3
+      transaction.state.log.min.isr: 2
+      transaction.state.log.replication.factor: 3
+    listeners:
+      - name: plain
+        port: 9092
+        tls: false
+        type: internal
+      - name: external
+        port: 9093
+        tls: true
+        type: route
+    replicas: 3
+    storage:
+      size: 25Gi
+      type: persistent-claim
+    version: 3.6.0
+  zookeeper:
+    replicas: 3
+    storage:
+      size: 5Gi
+      type: persistent-claim
