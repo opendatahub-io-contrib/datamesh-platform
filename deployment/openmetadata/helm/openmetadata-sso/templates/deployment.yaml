@@ -1,0 +1,67 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ include "openmetadata.fullname" . }}
+  labels:
+    {{- include "openmetadata.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "openmetadata.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "openmetadata.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+        - name: openmetadata-init
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command:
+            - sh
+            - '-c'
+            - ./bootstrap/bootstrap_storage.sh migrate-all
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configmap.name }}
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+      containers:
+        - resources:
+            {{- toYaml .Values.resources | nindent 12 }}              
+          name: {{ .Chart.Name }}
+          ports:
+            - containerPort: {{ .Values.service.appPort }}
+              protocol: TCP
+            - containerPort: {{ .Values.service.adminPort }}
+              protocol: TCP
+          volumeMounts:
+            - name: {{ .Values.volume.name }}
+              mountPath: {{ .Values.volume.mountPath }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configmap.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env: 
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: AUTHENTICATION_PUBLIC_KEYS
+              value: "{{ .Values.sso.publicKey }}"
+            - name: OM_URI
+              value: "{{ .Values.sso.omUri }}"
+            - name: SERVER_HOST_API_URL
+              value: "{{ .Values.sso.serverUrl }}"
+            - name: AUTHENTICATION_CALLBACK_URL
+              value: "{{ .Values.sso.callbackUrl }}"
+            - name: AUTHENTICATION_AUTHORITY
+              value: "{{ .Values.sso.authenticationAuthority }}"
+      volumes:
+        - name: {{ .Values.volume.name }}
+          emptyDir: {}

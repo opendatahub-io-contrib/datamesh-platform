@@ -1,0 +1,57 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ include "openmetadata.fullname" . }}
+  labels:
+    {{- include "openmetadata.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "openmetadata.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "openmetadata.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+        - name: openmetadata-init
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command:
+            - sh
+            - '-c'
+            - ./bootstrap/bootstrap_storage.sh migrate-all
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configmap.name }}
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+      containers:
+        - resources:
+            {{- toYaml .Values.resources | nindent 12 }}              
+          name: {{ .Chart.Name }}
+          ports:
+            - containerPort: {{ .Values.service.appPort }}
+              protocol: TCP
+            - containerPort: {{ .Values.service.adminPort }}
+              protocol: TCP
+          volumeMounts:
+            - name: {{ .Values.volume.name }}
+              mountPath: {{ .Values.volume.mountPath }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configmap.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env: 
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+      volumes:
+        - name: {{ .Values.volume.name }}
+          emptyDir: {}
