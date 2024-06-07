@@ -112,7 +112,7 @@ spec:
           terminationMessagePolicy: File
           imagePullPolicy: IfNotPresent
         - name: deploydagsfroms3
-          image: 'quay.io/osclimate/minioclient:2.0'
+          image: 'quay.io/osclimate/minioclient:2.1'
           env:
             - name: NAMESPACE
               valueFrom:
@@ -389,7 +389,7 @@ spec:
             - '-c'
             - exec airflow scheduler
         - name: mc
-          image: 'quay.io/osclimate/minioclient:2.0'
+          image: 'quay.io/osclimate/minioclient:2.1'
           env:
             - name: DEPLOYMENT_TYPE
               value: sidecar
