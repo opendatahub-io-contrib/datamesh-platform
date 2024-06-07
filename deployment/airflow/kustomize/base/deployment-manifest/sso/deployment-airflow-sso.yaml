@@ -146,7 +146,7 @@ spec:
               mountPath: /opt/airflow/dags
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
       securityContext: {}
@@ -426,7 +426,7 @@ spec:
               mountPath: /opt/airflow/logs
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
       volumes:
         - name: dags-data
           emptyDir: {}
