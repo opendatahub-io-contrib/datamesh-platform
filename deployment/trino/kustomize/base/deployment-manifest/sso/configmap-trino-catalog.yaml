@@ -34,7 +34,7 @@ data:
     hive.s3.socket-timeout=180s
   hadoop.properties: |-
     connector.name=iceberg
-    iceberg.catalog.type=hadoop
+    hive.hdfs.authentication.type=NONE
     hive.metastore.uri=thrift://hive-metastore:9083
     iceberg.warehouse=s3://datamesh/product
     iceberg.fs.s3a.access.key=minioAdmin
