@@ -13,6 +13,7 @@ data:
     hive.s3.ssl.enabled=false
     hive.s3.max-connections=100
     hive.non-managed-table-writes-enabled=true
+    fs.native-s3.enabled=true
     # hive.allow-drop-table=true
     hive.parquet.use-column-names=true
     hive.recursive-directories=true
@@ -32,6 +33,7 @@ data:
     hive.metastore-timeout=180s
     hive.s3.connect-timeout=180s
     hive.s3.socket-timeout=180s
+    fs.native-s3.enabled=true
   tpcds.properties: |
     connector.name=tpcds
     tpcds.splits-per-node=4
