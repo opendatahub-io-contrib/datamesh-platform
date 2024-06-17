@@ -33,14 +33,23 @@ data:
     hive.s3.connect-timeout=180s
     hive.s3.socket-timeout=180s
   hadoop.properties: |-
-    connector.name=iceberg
-    hive.hdfs.authentication.type=NONE
+    connector.name=hive
+    hive.s3.endpoint=http://minio:9000
     hive.metastore.uri=thrift://hive-metastore:9083
-    iceberg.warehouse=s3://datamesh/product
-    iceberg.fs.s3a.access.key=minioAdmin
-    iceberg.fs.s3a.secret.key=minio1234
-    iceberg.fs.s3a.endpoint=http://minio:9000
-    iceberg.fs.s3a.path.style.access=true
+    hive.metastore.warehouse.dir=s3://datamesh/product/
+    hive.s3.aws-access-key=minioAdmin
+    hive.s3.aws-secret-key=minio1234
+    hive.s3.path-style-access=true
+    hive.s3.ssl.enabled=false
+    hive.s3.max-connections=100
+    hive.non-managed-table-writes-enabled=true
+    # hive.allow-drop-table=true
+    hive.parquet.use-column-names=true
+    hive.recursive-directories=true
+    hive.metastore.authentication.type=NONE
+    hive.metastore-timeout=180s
+    hive.s3.connect-timeout=180s
+    hive.s3.socket-timeout=180s
   tpcds.properties: |
     connector.name=tpcds
     tpcds.splits-per-node=4
