@@ -32,6 +32,15 @@ data:
     hive.metastore-timeout=180s
     hive.s3.connect-timeout=180s
     hive.s3.socket-timeout=180s
+  hadoop.properties: |-
+    connector.name=iceberg
+    iceberg.catalog.type=hadoop
+    hive.metastore.uri=thrift://hive-metastore:9083
+    iceberg.warehouse=s3://datamesh/product
+    iceberg.fs.s3a.access.key=minioAdmin
+    iceberg.fs.s3a.secret.key=minio1234
+    iceberg.fs.s3a.endpoint=http://minio:9000
+    iceberg.fs.s3a.path.style.access=true
   tpcds.properties: |
     connector.name=tpcds
     tpcds.splits-per-node=4
