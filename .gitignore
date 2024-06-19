@@ -4,3 +4,4 @@
 *.log
 # Ignore build directories
 .DS_Store
+.vscode

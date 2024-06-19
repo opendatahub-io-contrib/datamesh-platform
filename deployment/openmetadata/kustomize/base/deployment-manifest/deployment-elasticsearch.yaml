@@ -22,8 +22,10 @@ spec:
         - name: elasticsearch
           # image: >-
             # docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+          # image: >-
+          #   quay.io/osclimate/elasticsearch:7.16.3
           image: >-
-            quay.io/osclimate/elasticsearch:7.16.3
+            quay.io/osclimate/elasticsearch:8.10.2
           ports:
             - containerPort: 9200
               protocol: TCP
