@@ -41,6 +41,9 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
+          volumeMounts:
+            - name: data-logs
+              mountPath: ./logs
       terminationGracePeriodSeconds: 5
       securityContext: {}
       containers:
