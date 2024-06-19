@@ -43,7 +43,8 @@ spec:
           imagePullPolicy: Always
           volumeMounts:
             - name: data-logs
-              mountPath: /opt/openmetadata/logs
+              # mountPath: /opt/openmetadata/logs
+              mountPath: /opt/openmetadata/./logs
       terminationGracePeriodSeconds: 5
       securityContext: {}
       containers:
@@ -64,7 +65,8 @@ spec:
           imagePullPolicy: Always
           volumeMounts:
             - name: data-logs
-              mountPath: /opt/openmetadata/logs
+              # mountPath: /opt/openmetadata/logs
+              mountPath: /opt/openmetadata/./logs
           terminationMessagePolicy: File
           envFrom:
             - configMapRef:
