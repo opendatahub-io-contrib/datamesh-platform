@@ -23,7 +23,7 @@ spec:
         - name: openmetadata-init
           # image: 'docker.getcollate.io/openmetadata/server:1.2.2'
           #image: 'quay.io/osclimate/openmetadata:1.2.2'
-          image: 'quay.io/osclimate/openmetadata/server:1.4.1'
+          image: 'docker.getcollate.io/openmetadata/server:1.4.1'
           command:
             - sh
             - '-c'
@@ -66,7 +66,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: openmetadata
-          image: 'quay.io/osclimate/openmetadata/server:1.4.1'
+          image: 'docker.getcollate.io/openmetadata/server:1.4.1'
           env: 
             - name: NAMESPACE
               valueFrom:
