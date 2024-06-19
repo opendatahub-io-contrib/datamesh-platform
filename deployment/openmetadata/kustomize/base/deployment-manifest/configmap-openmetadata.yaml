@@ -104,7 +104,7 @@ data:
   SERVER_PORT: '8585'
   ELASTICSEARCH_PASSWORD: ''
   AUTHORIZER_REQUEST_FILTER: org.openmetadata.service.security.JwtFilter
-  SECRET_MANAGER: noop
+  SECRET_MANAGER: db
   OPENMETADATA_SMTP_SENDER_MAIL: ''
   WEB_CONF_XSS_PROTECTION_BLOCK: 'true'
   OM_SUPPORT_URL: 'https://slack.open-metadata.org'
