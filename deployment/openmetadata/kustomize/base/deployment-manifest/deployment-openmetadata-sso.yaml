@@ -83,15 +83,15 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
             - name: AUTHENTICATION_PUBLIC_KEYS
-              value: '[http://openmetadata.$(NAMESPACE).svc.cluster.local:8585/api/v1/system/config/jwks,https://keycloak-$(NAMESPACE).$(OPENSHIFT_API_SERVER)/realms/KeycloakRealm/protocol/openid-connect/certs]'
+              value: '[http://openmetadata.$(NAMESPACE).svc.cluster.local:8585/api/v1/system/config/jwks,https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/certs]'
             - name: OM_URI
               value: 'http://openmetadata.$(NAMESPACE).svc.cluster.local:8585'
             - name: SERVER_HOST_API_URL
               value: 'http://openmetadata.$(NAMESPACE).svc.cluster.local:8585/api'
             - name: AUTHENTICATION_CALLBACK_URL
-              value: 'https://openmetadata-$(NAMESPACE).$(OPENSHIFT_API_SERVER)/callback'
+              value: 'https://openmetadata-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/callback'
             - name: AUTHENTICATION_AUTHORITY
-              value: 'https://keycloak-$(NAMESPACE).$(OPENSHIFT_API_SERVER)/realms/KeycloakRealm/'
+              value: 'https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/'
       volumes:
         - name: data-logs
           emptyDir: {}
