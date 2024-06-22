@@ -385,8 +385,8 @@ spec:
             - name: dags-log
               mountPath: /opt/airflow/logs
           terminationMessagePolicy: File
-          # image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
-          image: quay.io/osclimate/2.7.3-omdingest-1.4.1
+          image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          # image: quay.io/osclimate/2.7.3-omdingest-1.4.1
           args:
             - bash
             - '-c'
