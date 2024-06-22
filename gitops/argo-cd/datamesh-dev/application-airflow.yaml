@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: https://github.com/opendatahub-io-contrib/datamesh-platform.git
     path: deployment/airflow/kustomize/overlays/development
-    targetRevision: main
+    targetRevision: datamesh-sso
     # plugin:
     #   name: argocd-vault-plugin-kustomize
   syncPolicy:
