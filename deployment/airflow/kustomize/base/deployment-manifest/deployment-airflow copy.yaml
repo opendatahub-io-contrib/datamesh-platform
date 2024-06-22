@@ -18,7 +18,8 @@ spec:
       restartPolicy: Always
       initContainers:
         - name: wait-for-airflow-migrations
-          image: quay.io/os-c-data-mesh-poc/airflow
+          mage: quay.io/os-c-data-mesh-poc/airflow
+          # image: quay.io/osclimate/2.7.3-omdingest-1.4.1
           args:
             - airflow
             - db
@@ -188,7 +189,8 @@ spec:
             - name: dags-log
               mountPath: /opt/airflow/logs
           terminationMessagePolicy: File
-          image: quay.io/os-c-data-mesh-poc/airflow
+          # image: quay.io/os-c-data-mesh-poc/airflow
+          image: quay.io/osclimate/2.7.3-omdingest-1.4.1
           args:
             - bash
             - '-c'
@@ -268,7 +270,8 @@ spec:
             - name: dags-log
               mountPath: /opt/airflow/logs
           terminationMessagePolicy: File
-          image: quay.io/os-c-data-mesh-poc/airflow
+          # image: quay.io/os-c-data-mesh-poc/airflow
+          image: quay.io/osclimate/2.7.3-omdingest-1.4.1
           args:
             - bash
             - '-c'

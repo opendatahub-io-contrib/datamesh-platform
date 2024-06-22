@@ -18,7 +18,8 @@ spec:
       restartPolicy: Always
       initContainers:
         - name: wait-for-airflow-migrations
-          image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          # image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          image: quay.io/osclimate/2.7.3-omdingest-1.4.1
           args:
             - airflow
             - db
@@ -221,29 +222,29 @@ spec:
               value: trino://admin:@trino.$(NAMESPACE).svc.cluster.local:8080/
             - name: API_BASE_URL
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm
             - name: OAUTH_TOKEN_URL
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/protocol/openid-connect/token
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/token
             - name: OAUTH_AUTHORIZE_URL
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/protocol/openid-connect/auth
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/auth
             - name: OAUTH_USER_INFO
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/protocol/openid-connect/userinfo
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/userinfo
             - name: OAUTH_LOGOUT_REDIRECT_URL
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/protocol/openid-connect/logout
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/logout
             - name: OAUTH_JWKS_URI
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/protocol/openid-connect/certs
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/certs
             - name: CLIENT_ID
               value: airflow
             - name: CLIENT_SECRET
               value: QiEZ6U5enz4YGp9alJg6Cw7g87RIEk4z
             - name: OIDC_ISSUER
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm
             - name: AIRFLOW__WEBSERVER__RBAC
               value: 'False'
             - name: AIRFLOW__WEBSERVER__AUTHENTICATE
@@ -269,7 +270,8 @@ spec:
               mountPath: /opt/airflow/webserver_config.py
               subPath: webserver_config.py
           terminationMessagePolicy: File
-          image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          # image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          image: quay.io/osclimate/2.7.3-omdingest-1.4.1
           args:
             - bash
             - '-c'
@@ -341,29 +343,29 @@ spec:
               value: trino://admin:@trino.$(NAMESPACE).svc.cluster.local:8080/
             - name: API_BASE_URL
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm
             - name: OAUTH_TOKEN_URL
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/protocol/openid-connect/token
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/token
             - name: OAUTH_AUTHORIZE_URL
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/protocol/openid-connect/auth
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/auth
             - name: OAUTH_USER_INFO
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/protocol/openid-connect/userinfo
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/userinfo
             - name: OAUTH_LOGOUT_REDIRECT_URL
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/protocol/openid-connect/logout
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/logout
             - name: OAUTH_JWKS_URI
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm/protocol/openid-connect/certs
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/certs
             - name: CLIENT_ID
               value: airflow
             - name: CLIENT_SECRET
               value: QiEZ6U5enz4YGp9alJg6Cw7g87RIEk4z
             - name: OIDC_ISSUER
               value: >-
-                https://keycloak-$(NAMESPACE).apps.osc-cl4.apps.os-climate.org/realms/KeycloakRealm
+                https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm
             - name: AIRFLOW__WEBSERVER__RBAC
               value: 'False'
             - name: AIRFLOW__WEBSERVER__AUTHENTICATE
@@ -383,7 +385,8 @@ spec:
             - name: dags-log
               mountPath: /opt/airflow/logs
           terminationMessagePolicy: File
-          image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          # image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          image: quay.io/osclimate/2.7.3-omdingest-1.4.1
           args:
             - bash
             - '-c'
