@@ -241,7 +241,7 @@ spec:
             - name: CLIENT_ID
               value: airflow
             - name: CLIENT_SECRET
-              value: QiEZ6U5enz4YGp9alJg6Cw7g87RIEk4z
+              value: FZkGXczeCmde2G8cYIdB7Gfhx4RCNfWp
             - name: OIDC_ISSUER
               value: >-
                 https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm
@@ -362,7 +362,7 @@ spec:
             - name: CLIENT_ID
               value: airflow
             - name: CLIENT_SECRET
-              value: QiEZ6U5enz4YGp9alJg6Cw7g87RIEk4z
+              value: FZkGXczeCmde2G8cYIdB7Gfhx4RCNfWp
             - name: OIDC_ISSUER
               value: >-
                 https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm
