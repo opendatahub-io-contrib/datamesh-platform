@@ -43,7 +43,7 @@ data:
   OAUTH_LOGOUT_REDIRECT_URL: 'https://keycloak.$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/logout'
   OAUTH_JWKS_URI: 'https://keycloak.$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm/protocol/openid-connect/certs'
   CLIENT_ID: 'airflow'
-  CLIENT_SECRET: 'QiEZ6U5enz4YGp9alJg6Cw7g87RIEk4z'
+  CLIENT_SECRET: 'FZkGXczeCmde2G8cYIdB7Gfhx4RCNfWp'
   OIDC_ISSUER: 'https://keycloak-$(NAMESPACE).apps.rosa-8grhg.ssnp.p1.openshiftapps.com/realms/KeycloakRealm'
   AIRFLOW__WEBSERVER__RBAC: 'False'
   AIRFLOW__WEBSERVER__AUTHENTICATE: 'False'
