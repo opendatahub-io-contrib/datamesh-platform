@@ -7,10 +7,10 @@ resources:
 - ./deployment-manifest/secret-dag-deployment.yaml
 - ./deployment-manifest/service-postgres.yaml
 # sso
-- ./deployment-manifest/sso/configmap-sso.yaml
-- ./deployment-manifest/sso/conficmap-airflow-sso.yaml
-- ./deployment-manifest/sso/deployment-airflow-sso.yaml
+# - ./deployment-manifest/sso/configmap-sso.yaml
+# - ./deployment-manifest/sso/conficmap-airflow-sso.yaml
+# - ./deployment-manifest/sso/deployment-airflow-sso.yaml
 # non-sso
-# - ./deployment-manifest/deployment-airflow.yaml
+- ./deployment-manifest/deployment-airflow.yaml
 - ./deployment-manifest/service-airflow.yaml
 - ./deployment-manifest/route-airflow.yaml
