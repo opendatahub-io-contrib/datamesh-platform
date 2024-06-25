@@ -18,7 +18,8 @@ spec:
       restartPolicy: Always
       initContainers:
         - name: wait-for-airflow-migrations
-          image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          # image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2-countyfix
           args:
             - airflow
             - db
@@ -269,7 +270,8 @@ spec:
               mountPath: /opt/airflow/webserver_config.py
               subPath: webserver_config.py
           terminationMessagePolicy: File
-          image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          # image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2-countyfix
           args:
             - bash
             - '-c'
@@ -383,7 +385,8 @@ spec:
             - name: dags-log
               mountPath: /opt/airflow/logs
           terminationMessagePolicy: File
-          image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          # image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
+          image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2-countyfix
           args:
             - bash
             - '-c'
