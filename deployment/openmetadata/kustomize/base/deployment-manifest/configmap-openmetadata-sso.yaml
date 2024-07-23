@@ -113,3 +113,5 @@ data:
   ELASTICSEARCH_CONNECTION_TIMEOUT_SECS: '5'
   WEB_CONF_HSTS_MAX_AGE: 365 days
   PIPELINE_SERVICE_CLIENT_CLASS_NAME: org.openmetadata.service.clients.pipeline.airflow.AirflowRESTClient
+  AIRFLOW_ADMIN_USER: admin
+  AIRFLOW_ADMIN_PASSWORD: admin
