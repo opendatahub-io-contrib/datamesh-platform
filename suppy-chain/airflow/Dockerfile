@@ -10,8 +10,8 @@ RUN apt-get update \
 USER airflow
 
 RUN pip install apache-airflow-providers-trino \
-                openmetadata-managed-apis~=1.4.1 \
-                openmetadata-ingestion[all]==1.4.1 \
+                openmetadata-managed-apis~=1.2.2 \
+                openmetadata-ingestion[all]==1.2.2 \
                 astronomer-cosmos==1.2.5 \
                 typing-extensions==4.5.0 \
                 dbt-artifacts-parser \
