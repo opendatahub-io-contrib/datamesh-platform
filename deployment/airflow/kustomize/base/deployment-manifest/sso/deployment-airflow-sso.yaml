@@ -20,7 +20,8 @@ spec:
         - name: wait-for-airflow-migrations
           # image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
           # image: quay.io/osclimate/2.7.3-omdingest-1.4.1
-          image: quay.io/osclimate/airflow-2.7.3-omdingest-1.4.1:1.0
+          # image: quay.io/osclimate/airflow-2.7.3-omdingest-1.4.1:1.0
+          image: quay.io/osclimate/airflow-2.9.3-omdingest-1.4.1:1.0
           args:
             - airflow
             - db
@@ -273,7 +274,9 @@ spec:
           terminationMessagePolicy: File
           # image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
           # image: quay.io/osclimate/2.7.3-omdingest-1.4.1
-          image: quay.io/osclimate/airflow-2.7.3-omdingest-1.4.1:1.0
+          # image: quay.io/osclimate/airflow-2.7.3-omdingest-1.4.1:1.0
+          image: quay.io/osclimate/airflow-2.9.3-omdingest-1.4.1:1.0
+          
           args:
             - bash
             - '-c'
@@ -389,7 +392,8 @@ spec:
           terminationMessagePolicy: File
           # image: quay.io/osclimate/airflow:2.7.3-omdingest-1.2.2
           # image: quay.io/osclimate/2.7.3-omdingest-1.4.1
-          image: quay.io/osclimate/airflow-2.7.3-omdingest-1.4.1:1.0
+          # image: quay.io/osclimate/airflow-2.7.3-omdingest-1.4.1:1.0
+          image: quay.io/osclimate/airflow-2.9.3-omdingest-1.4.1:1.0
           args:
             - bash
             - '-c'
