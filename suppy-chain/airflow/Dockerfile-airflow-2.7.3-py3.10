@@ -1,0 +1,48 @@
+FROM apache/airflow:2.7.3-python3.10
+USER root
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+        gcc \
+        vim \
+  && apt-get autoremove -yqq --purge \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+#ADD requirements.txt . 
+
+USER airflow
+
+WORKDIR /opt/airflow
+
+RUN pip install apache-airflow-providers-trino \
+                openmetadata-managed-apis==1.2.2 \
+                openmetadata-ingestion==1.2.2 \
+                astronomer-cosmos==1.2.5 \
+                typing-extensions==4.5.0 \
+                dbt-artifacts-parser \
+                pycountry \
+                country_converter \
+                sqllineage
+
+RUN mkdir -p /opt/airflow/dag_generated_configs
+
+
+ENV PIP_USER=false
+
+
+# RUN python -m venv dbt_venv && source dbt_venv/bin/activate && \
+#   pip install --no-cache-dir pipenv dbt-trino==1.5.1 dbt-fal==1.5.9 pycountry country_converter && deactivate
+
+# Create a virtual environment and install packages
+RUN python -m venv dbt_venv && \
+    . dbt_venv/bin/activate && \
+    pip install --upgrade pip && \
+    pip install dbt-trino==1.5.1 dbt-fal==1.5.9 pycountry country_converter && \
+    deactivate
+    # . dbt_venv/bin/activate
+
+ENV PIP_USER=true
+ENV PATH="/opt/airflow/dbt_venv/bin:$PATH"
+
+#ENV PATH="$PATH:/opt/airflow/dbt_venv/bin"
+
+ENV AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT="120.0"
