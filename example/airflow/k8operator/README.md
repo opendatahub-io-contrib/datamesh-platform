@@ -5,9 +5,9 @@
     
 Example docker image is provided in the following folder for the task that need to be run as a docker container.
         
-    Docker image for Task : **example/airflow/k8operator/example-dockerimage**
+    Docker image for Task : example/airflow/k8operator/example-dockerimage
     
-    Dags for K8-operators : **example/airflow/k8operator/dags**
+    Dags for K8-operators : example/airflow/k8operator/dags
 
     Step 1  : build docker image 
 
