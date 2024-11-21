@@ -15,7 +15,7 @@ Example docker image is provided in the following folder for the task that need 
 
     step 3  : deploy the dags to airflow instnace.
 
-    step 4  : deploy k8-dags to minio https://minio-datamesh-demo.apps.osc-cl4.apps.os-climate.org
+              deploy k8-dags to minio https://minio-datamesh-demo.apps.osc-cl4.apps.os-climate.org
 
               s3-bucket : airflow/release
 
