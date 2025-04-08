@@ -32,6 +32,10 @@ data:
     hive.metastore-timeout=180s
     hive.s3.connect-timeout=180s
     hive.s3.socket-timeout=180s
+  unitycatalog.properties: |-
+    connector.name=iceberg
+    iceberg.catalog.type=rest
+    iceberg.rest-catalog.uri=http://unitycatalog-server:8080/api/2.1/unity-catalog/iceberg
   tpcds.properties: |
     connector.name=tpcds
     tpcds.splits-per-node=4
