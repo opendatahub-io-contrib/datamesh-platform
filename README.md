@@ -50,6 +50,6 @@ Data Transformation ([DBT][8]) | SQL-first transformation workflow tooling that 
 [9]: https://greatexpectations.io/
 [10]: https://open-metadata.org/
 [11]: https://airflow.apache.org/
-[12]: https://fybrik.io/v1.2/
+[12]: https://www.openpolicyagent.org/
 [13]: https://superset.apache.org/
 [14]: https://pandas.pydata.org/
